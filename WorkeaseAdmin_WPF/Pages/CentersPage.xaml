@@ -4,37 +4,26 @@
       Title="Centers">
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage Centers" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Edit" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Manage Centers" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
+            <Button Content="Edit Center" Click="EditCenter_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Add Center" Click="AddCenter_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Delete Center" Click="DeleteCenter_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
-
-            <Border Background="#F3E5F5" BorderBrush="#FF5CA8" BorderThickness="1">
-                <Grid>
-                    <StackPanel>
-                        <Border Background="{StaticResource PrimaryPink}" Height="60">
-                            <TextBlock Text="Centers" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <DataGrid AutoGenerateColumns="True" Background="Transparent" BorderThickness="0"/>
-                    </StackPanel>
-                    <TextBlock Text="/* Display more centers */" Foreground="#85E15F" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0"/>
-                </Grid>
+            <Border Background="#F3E5F5" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="1">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="{StaticResource PrimaryPink}" Height="60">
+                        <TextBlock Text="MANAGE CENTERS" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <DataGrid x:Name="CentersGrid" AutoGenerateColumns="True" Background="Transparent" BorderThickness="0" Margin="10"/>
+                </DockPanel>
             </Border>
-
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Content="Add Center" Width="150" Height="45" Background="#4FC3F7" Foreground="White" BorderThickness="0" Margin="0,0,10,0"/>
-                <Button Content="Delete Center" Width="150" Height="45" Background="#FF5252" Foreground="White" BorderThickness="0"/>
-            </StackPanel>
         </Grid>
     </Grid>
 </Page>

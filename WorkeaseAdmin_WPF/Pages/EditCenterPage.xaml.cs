@@ -4,9 +4,9 @@ using System.Windows.Navigation;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
-    public partial class CentersPage : Page
+    public partial class EditCenterPage : Page
     {
-        public CentersPage()
+        public EditCenterPage()
         {
             InitializeComponent();
         }

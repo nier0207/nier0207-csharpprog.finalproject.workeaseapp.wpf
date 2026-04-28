@@ -95,6 +95,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\DeleteCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HealthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +133,12 @@
     </Compile>
     <Compile Include="Pages\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DeleteCenterPage.xaml.cs">
+      <DependentUpon>DeleteCenterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditCenterPage.xaml.cs">
+      <DependentUpon>EditCenterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HealthPage.xaml.cs">
       <DependentUpon>HealthPage.xaml</DependentUpon>

@@ -1,16 +1,16 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
-    public partial class CentersPage : Page
+    public partial class DeleteCenterPage : Page
     {
-        public CentersPage()
+        public DeleteCenterPage()
         {
             InitializeComponent();
         }
-
         private void ManageCenters_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService?.Navigate(new CentersPage());
