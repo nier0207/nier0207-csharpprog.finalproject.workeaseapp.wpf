@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WorkeaseAdmin_WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for WorkersPage.xaml
+    /// Interaction logic for DeleteWorkerPage.xaml
     /// </summary>
-    public partial class WorkersPage : Page
+    public partial class DeleteWorkerPage : Page
     {
-        public WorkersPage()
+        public DeleteWorkerPage()
         {
             InitializeComponent();
         }

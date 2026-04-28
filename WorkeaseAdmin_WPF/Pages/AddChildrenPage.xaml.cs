@@ -24,5 +24,22 @@ namespace WorkeaseAdmin_WPF.Pages
         {
             InitializeComponent();
         }
+        // Navigation for Sidebar Buttons
+        private void ManageChildren_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new ChildrenPage());
+        }
+
+        private void EditChild_Click(object sender, RoutedEventArgs e)
+        {
+            // Siguraduhin na may EditChildPage.xaml ka na
+            this.NavigationService?.Navigate(new EditChildPage());
+        }
+
+        private void DeleteChild_Click(object sender, RoutedEventArgs e)
+        {
+            // Siguraduhin na may DeleteChildPage.xaml ka na
+            this.NavigationService?.Navigate(new DeleteChildPage());
+        }
     }
 }

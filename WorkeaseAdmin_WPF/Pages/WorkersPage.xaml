@@ -4,46 +4,54 @@
       Title="Workers">
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage CDW Workers" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Edit" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Manage Workers" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
+
+            <Button Content="Edit Worker" Click="EditWorker_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+
+            <Button Content="Add Worker" Click="AddWorker_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+
+            <Button Content="Delete Worker" Click="DeleteWorker_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
+            <Border Background="#F3E5F5" CornerRadius="10" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="1">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="{StaticResource PrimaryPink}" Height="60" CornerRadius="9,9,0,0">
+                        <TextBlock Text="MANAGE WORKERS" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
 
-            <Border Background="#F3E5F5" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="1">
-                <Grid>
-                    <StackPanel>
-                        <Border Background="{StaticResource PrimaryPink}" Height="60">
-                            <TextBlock Text="Workers" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <DataGrid AutoGenerateColumns="False" Background="Transparent" BorderThickness="0" HeadersVisibility="Column">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <DataGrid x:Name="WorkersGrid" 
+                                  Grid.Row="1"
+                                  AutoGenerateColumns="False" 
+                                  Background="Transparent" 
+                                  BorderThickness="0" 
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  SelectionMode="Single"
+                                  RowHeight="35">
+
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="worker_id" Width="80"/>
-                                <DataGridTextColumn Header="first_name" Width="*"/>
-                                <DataGridTextColumn Header="last_name" Width="*"/>
-                                <DataGridTextColumn Header="email" Width="*"/>
-                                <DataGridTextColumn Header="assigned_center" Width="*"/>
-                                <DataGridTextColumn Header="contact_no" Width="*"/>
+                                <DataGridTextColumn Header="ID" Binding="{Binding WorkerID}" Width="50"/>
+                                <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*"/>
+                                <DataGridTextColumn Header="Position" Binding="{Binding Position}" Width="150"/>
+                                <DataGridTextColumn Header="Assigned Center" Binding="{Binding CenterName}" Width="*"/>
+                                <DataGridTextColumn Header="Contact" Binding="{Binding ContactNumber}" Width="120"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                    </StackPanel>
-                    <TextBlock Text="/* Display more workers */" Foreground="#85E15F" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0"/>
-                </Grid>
+                    </Grid>
+                </DockPanel>
             </Border>
-
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Content="Add Worker" Width="150" Height="45" Background="{StaticResource CardBlue}" Foreground="White" BorderThickness="0" Margin="0,0,10,0"/>
-                <Button Content="Delete Worker" Width="150" Height="45" Background="#FF5C5C" Foreground="White" BorderThickness="0"/>
-            </StackPanel>
         </Grid>
     </Grid>
 </Page>

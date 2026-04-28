@@ -99,7 +99,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\DeleteChildPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DeleteWorkerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\EditCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditChildPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditWorkerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,8 +153,20 @@
     <Compile Include="Pages\DeleteCenterPage.xaml.cs">
       <DependentUpon>DeleteCenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DeleteChildPage.xaml.cs">
+      <DependentUpon>DeleteChildPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DeleteWorkerPage.xaml.cs">
+      <DependentUpon>DeleteWorkerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EditCenterPage.xaml.cs">
       <DependentUpon>EditCenterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditChildPage.xaml.cs">
+      <DependentUpon>EditChildPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditWorkerPage.xaml.cs">
+      <DependentUpon>EditWorkerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HealthPage.xaml.cs">
       <DependentUpon>HealthPage.xaml</DependentUpon>

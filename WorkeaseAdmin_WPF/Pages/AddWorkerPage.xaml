@@ -4,54 +4,49 @@
       Title="Add Worker">
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage CDW Workers" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Edit" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Manage Workers" Click="ManageWorkers_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
+            <Button Content="Edit Worker" Click="EditWorker_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Add Worker" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Delete Worker" Click="DeleteWorker_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 
-        <Border Grid.Column="1" Background="#F3E5F5" Margin="30" CornerRadius="5">
-            <StackPanel>
-                <Border Background="{StaticResource PrimaryPink}" Height="50">
-                    <TextBlock Text="Add Worker" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
+        <Grid Grid.Column="1" Margin="30">
+            <Border Background="White" CornerRadius="15" BorderBrush="#38b6ff" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <UniformGrid Columns="2" Margin="20">
-                    <StackPanel Margin="10">
-                        <TextBlock Text="First name" FontWeight="Bold"/>
-                        <TextBox Height="30" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Last name" FontWeight="Bold"/>
-                        <TextBox Height="30" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Email" FontWeight="Bold"/>
-                        <TextBox Height="30" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Password" FontWeight="Bold"/>
-                        <PasswordBox Height="30" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Address" FontWeight="Bold"/>
-                        <TextBox Height="30" Margin="0,5,0,0"/>
-                        <TextBlock Text="/* Add birth day container" Foreground="#85E15F" FontSize="12" Margin="0,40,0,0"/>
-                    </StackPanel>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Contact no." FontWeight="Bold"/>
-                        <TextBox Height="30" Margin="0,5,0,0"/>
-                        <TextBlock Text="/* Add check box for gender (male or female)" Foreground="#85E15F" FontSize="12" Margin="0,40,0,0"/>
-                    </StackPanel>
-                </UniformGrid>
+                    <Border Grid.Row="0" Background="#38b6ff" CornerRadius="14,14,0,0">
+                        <TextBlock Text="REGISTER NEW WORKER" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
 
-                <TextBlock Text="/* Add a bit of description about this page" Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="40,20">
+                            <TextBlock Text="Full Name" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
+                            <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
 
-                <Button Content="Create New Worker" HorizontalAlignment="Right" Margin="0,20,20,0" Width="150" Height="40" Background="#4FC3F7" Foreground="White" BorderThickness="0"/>
-            </StackPanel>
-        </Border>
+                            <TextBlock Text="Position / Role" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
+                            <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
+
+                            <TextBlock Text="Contact Number" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
+                            <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
+
+                            <TextBlock Text="Assign to Center" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
+                            <ComboBox Height="40" VerticalContentAlignment="Center" Margin="0,0,0,25"/>
+
+                            <Button Content="Register Worker" Width="200" Height="50" HorizontalAlignment="Right" 
+                                    Background="#38b6ff" Foreground="White" FontSize="16" FontWeight="Bold" BorderThickness="0" Cursor="Hand"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

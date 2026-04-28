@@ -24,5 +24,22 @@ namespace WorkeaseAdmin_WPF.Pages
         {
             InitializeComponent();
         }
+        // Sa loob ng bawat class (Add, Edit, Delete Worker Pages)
+        private void ManageWorkers_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new WorkersPage());
+        }
+        private void AddWorker_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new AddWorkerPage());
+        }
+        private void EditWorker_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new EditWorkerPage());
+        }
+        private void DeleteWorker_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new DeleteWorkerPage());
+        }
     }
 }

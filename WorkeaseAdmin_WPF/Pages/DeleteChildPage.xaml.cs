@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace WorkeaseAdmin_WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for ChildrenPage.xaml
+    /// Interaction logic for DeleteChildPage.xaml
     /// </summary>
-    public partial class ChildrenPage : Page
+    public partial class DeleteChildPage : Page
     {
-        public ChildrenPage() { InitializeComponent(); }
+        public DeleteChildPage() { InitializeComponent(); }
+        private void ManageChildren_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new ChildrenPage()); }
         private void AddChildren_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new AddChildrenPage()); }
         private void EditChild_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new EditChildPage()); }
-        private void DeleteChild_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new DeleteChildPage()); }
     }
 }
