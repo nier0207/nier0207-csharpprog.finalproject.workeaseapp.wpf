@@ -2,6 +2,18 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Edit Center">
+
+    <Page.Resources>
+        <Style x:Key="PinkComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="#FF69B4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -10,55 +22,94 @@
 
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="Manage Centers" Click="ManageCenters_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Edit Center" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Edit Center" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
             <Button Content="Add Center" Click="AddCenter_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
             <Button Content="Delete Center" Click="DeleteCenter_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="25">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+        <Grid Grid.Column="1" Margin="30">
+            <Border Background="White" CornerRadius="10" Padding="20" Margin="0,0,0,20" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Margin="0,0,15,0">
-                        <TextBlock Text="Search ID" FontSize="11" Foreground="Gray"/>
-                        <TextBox Width="80" Height="30" VerticalContentAlignment="Center"/>
+                    <StackPanel>
+                        <TextBlock Text="Enter Center ID to Edit" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchCenterID" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0"/>
                     </StackPanel>
-                    <StackPanel Margin="0,0,15,0">
-                        <TextBlock Text="Search Name" FontSize="11" Foreground="Gray"/>
-                        <TextBox Width="180" Height="30" VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                    <Button Content="Search Center" Width="120" Height="30" Margin="0,15,0,0" 
-                            Background="{StaticResource CardBlue}" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                    <Button Content="Search Center" Width="150" Height="35" Margin="20,18,0,0" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="1" Background="White" CornerRadius="10" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="1">
+            <Border Background="#EBE3F1" CornerRadius="10" Margin="0,90,0,49">
                 <DockPanel>
-                    <Border DockPanel.Dock="Top" Background="{StaticResource PrimaryPink}" Height="55" CornerRadius="9,9,0,0">
-                        <TextBlock Text="EDIT CENTER DETAILS" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
+                        <TextBlock Text="EDIT CENTER" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel Margin="40,20">
-                            <TextBlock Text="Update Center Name" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
-                            <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
+                    <StackPanel Margin="40,20">
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Update Barangay" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
-                            <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
-
-
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Cancel Changes" Click="ManageCenters_Click" Width="140" Height="45" Background="#E0E0E0" Margin="0,0,10,0" BorderThickness="0"/>
-                                <Button Content="Save Updates" Width="160" Height="45" Background="{StaticResource CardBlue}" Foreground="White" FontWeight="Bold" BorderThickness="0"/>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Barangay" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <ComboBox Style="{StaticResource PinkComboBox}">
+                                    <ComboBoxItem Content="Barangay 1" IsSelected="True"/>
+                                </ComboBox>
                             </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="CDW worker" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <ComboBox Style="{StaticResource PinkComboBox}">
+                                    <ComboBoxItem Content="Worker Name" IsSelected="True"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Center name" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Contact person" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="/* Modify the fields above and save to update the center's records." 
+                                   Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
+                    </StackPanel>
                 </DockPanel>
             </Border>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,-15">
+                <Button Content="Cancel" Width="120" Height="45" Margin="0,0,10,0"
+                        Background="#cac5c5" Foreground="White" BorderThickness="0" FontWeight="Bold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="Save Changes" Width="160" Height="45"
+                        Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

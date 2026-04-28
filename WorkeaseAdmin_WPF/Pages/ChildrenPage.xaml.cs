@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
-    /// <summary>
-    /// Interaction logic for ChildrenPage.xaml
-    /// </summary>
     public partial class ChildrenPage : Page
     {
-        public ChildrenPage() { InitializeComponent(); }
-        private void AddChildren_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new AddChildrenPage()); }
-        private void EditChild_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new EditChildPage()); }
-        private void DeleteChild_Click(object sender, RoutedEventArgs e) { NavigationService.Navigate(new DeleteChildPage()); }
+        public ChildrenPage()
+        {
+            InitializeComponent();
+        }
+
+        // ITO ANG HINAHANAP NA DEFINITION:
+        private void AddChild_Click(object sender, RoutedEventArgs e)
+        {
+            // Ang logic para lumipat sa AddChildrenPage
+            this.NavigationService?.Navigate(new AddChildrenPage());
+        }
+
+        // Para sa ibang buttons sa sidebar kung meron man:
+        private void EditChild_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new EditChildPage());
+        }
+
+        private void DeleteChild_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService?.Navigate(new DeleteChildPage());
+        }
+
+        private void ManageChildren_Click(object sender, RoutedEventArgs e)
+        {
+            // Stay lang sa page na ito
+        }
     }
 }

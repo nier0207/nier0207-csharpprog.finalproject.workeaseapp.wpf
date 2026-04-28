@@ -1,11 +1,7 @@
 ﻿<Page x:Class="WorkeaseAdmin_WPF.Pages.AddChildrenPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1000"
-      Title="Add Children">
+      Title="Add Child">
 
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
@@ -13,111 +9,56 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage Children" Click="ManageChildren_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
-            <Button Content="Edit Child" Click="EditChild_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+        <!-- Navigation Sidebar -->
+        <StackPanel Grid.Column="0" Background="#1A0B2E">
+            <Button Content="Manage Children" Click="ManageChildren_Click" Background="#1A0B2E" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="Edit Child" Click="EditChild_Click" Background="#1A0B2E" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
             <Button Content="Add Child" Background="#2ECC71" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
             <Button Content="Delete Child" Click="DeleteChild_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="30">
-            <Border Background="White" CornerRadius="15" BorderBrush="#2ECC71" BorderThickness="1">
+            <Border Background="#EBE3F1" CornerRadius="10">
                 <DockPanel>
-                    <Border DockPanel.Dock="Top" Background="#2ECC71" Height="60" CornerRadius="14,14,0,0">
-                        <TextBlock Text="ENROLL NEW CHILD" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
+                        <TextBlock Text="Add Child" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel Margin="35">
+                    <StackPanel Margin="40,20">
+                        <!-- Name Row -->
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="First name" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox Height="35" BorderThickness="0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Last name" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox Height="35" BorderThickness="0"/>
+                            </StackPanel>
+                        </Grid>
 
-                            <Grid Margin="0,0,0,15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="First Name" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Last Name" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                            </Grid>
+                        <TextBlock Text="Guardian Name" FontWeight="Bold" Margin="0,10,0,5"/>
+                        <TextBox Height="35" BorderThickness="0" Margin="0,0,0,15"/>
 
-                            <Grid Margin="0,0,0,15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Email" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Password" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <PasswordBox Height="38" VerticalContentAlignment="Center" Padding="10,0"/>
-                                </StackPanel>
-                            </Grid>
+                        <TextBlock Text="Birth Day" FontWeight="Bold" Margin="0,10,0,5"/>
+                        <DatePicker Height="35"/>
 
-                            <Grid Margin="0,0,0,15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Address" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                                    <TextBlock Text="Gender" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                        <RadioButton Content="Male" Margin="0,0,25,0" IsChecked="True"/>
-                                        <RadioButton Content="Female"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-
-                            <Grid Margin="0,0,0,25">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Guardian Name" FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Guardian Contact No." FontWeight="Bold" Foreground="#27AE60" Margin="0,0,0,5"/>
-                                    <TextBox Height="38" VerticalContentAlignment="Center" Padding="10,0" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                            </Grid>
-
-                            <Button Content="REGISTER CHILD" 
-                                    Width="220" 
-                                    Height="50" 
-                                    HorizontalAlignment="Right"
-                                    Background="#2ECC71" 
-                                    Foreground="White" 
-                                    FontWeight="Bold" 
-                                    FontSize="15" 
-                                    BorderThickness="0"
-                                    Cursor="Hand">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="8"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
-
+                        <TextBlock Text="Gender" FontWeight="Bold" Margin="0,15,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Male" Margin="0,0,20,0"/>
+                            <RadioButton Content="Female"/>
                         </StackPanel>
-                    </ScrollViewer>
+                    </StackPanel>
                 </DockPanel>
             </Border>
+
+            <Button Content="Create New Record" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                    Width="180" Height="45" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
         </Grid>
     </Grid>
 </Page>

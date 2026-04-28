@@ -11,7 +11,7 @@
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="Manage Children" Click="ManageChildren_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
             <Button Content="Edit Child" Click="EditChild_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
-            <Button Content="Add Child" Click="AddChildren_Click" Background="#2ECC71" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Add Child" Click="AddChildren_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
             <Button Content="Delete Child" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 

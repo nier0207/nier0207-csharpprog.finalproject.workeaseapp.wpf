@@ -15,18 +15,34 @@
             <Button Content="Delete Worker" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="25">
-            <Border Background="White" CornerRadius="10" BorderBrush="#e12749" BorderThickness="1" VerticalAlignment="Top">
+        <StackPanel Grid.Column="1" Margin="30">
+            <Border Background="White" CornerRadius="10" Padding="20" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Text="Enter Worker ID" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchWorkerID" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0"/>
+                    </StackPanel>
+                    <Button Content="Search Worker" Click="SearchWorker_Click" Width="150" Height="35" Margin="20,18,0,0" Background="#B00020" Foreground="White" BorderThickness="0" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="White" CornerRadius="15" BorderBrush="#B00020" BorderThickness="1">
                 <StackPanel>
-                    <Border Background="#e12749" Height="55" CornerRadius="9,9,0,0">
-                        <TextBlock Text="CONFIRM DELETE WORKER" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Background="#B00020" Height="50" CornerRadius="14,14,0,0">
+                        <TextBlock Text="CONFIRM DELETION" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
+
                     <StackPanel Margin="30">
-                        <TextBlock Text="Are you sure you want to delete this worker?" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-                        <Button Content="DELETE" Width="150" Height="45" Background="#e12749" Foreground="White" FontWeight="Bold" HorizontalAlignment="Right" BorderThickness="0"/>
+                        <TextBlock Text="Name of Worker" Foreground="#B00020" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox IsReadOnly="True" Height="40" Background="#F9F9F9" Margin="0,0,0,20"/>
+
+                        <TextBlock Text="Position" Foreground="#B00020" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox IsReadOnly="True" Height="40" Background="#F9F9F9" Margin="0,0,0,20"/>
+
+                        <Button Content="DELETE WORKER" Width="200" Height="45" HorizontalAlignment="Right" Background="#B00020" Foreground="White" FontWeight="Bold" BorderThickness="0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>
