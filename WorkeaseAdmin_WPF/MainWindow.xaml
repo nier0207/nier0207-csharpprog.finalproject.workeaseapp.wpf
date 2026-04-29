@@ -17,8 +17,14 @@
                     <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{StaticResource PrimaryPink}">
-                    <TextBlock Text="Workease" Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Sidebar Logo Area with Gradient -->
+                <Border Grid.Row="0" Background="{StaticResource MainGradient}">
+                    <TextBlock Text="Workease" 
+               Foreground="White" 
+               FontSize="24" 
+               FontWeight="Bold" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"/>
                 </Border>
 
                 <StackPanel Grid.Row="1">
@@ -28,8 +34,6 @@
                     <Button Content="Children" Style="{StaticResource SidebarButtonStyle}" Tag="Children" Click="Menu_Click"/>
                     <Button Content="Attendance" Style="{StaticResource SidebarButtonStyle}" Tag="Attendance" Click="Menu_Click"/>
                     <Button Content="Health" Style="{StaticResource SidebarButtonStyle}" Tag="Health" Click="Menu_Click"/>
-
-                    <!-- BAGONG DAGDAG: Fees at Reports -->
                     <Button Content="Fees" Style="{StaticResource SidebarButtonStyle}" Tag="Fees" Click="Menu_Click"/>
                     <Button Content="Reports" Style="{StaticResource SidebarButtonStyle}" Tag="Reports" Click="Menu_Click"/>
                 </StackPanel>

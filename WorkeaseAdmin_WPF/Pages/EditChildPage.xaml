@@ -57,8 +57,8 @@
             </Border>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,5">
-               
-                <Button Content="Save Changes" Width="180" Height="45" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+
+                <Button Content="Save Changes" Width="180" Height="45" Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
             </StackPanel>
         </Grid>
     </Grid>

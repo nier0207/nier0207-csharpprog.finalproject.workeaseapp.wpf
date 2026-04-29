@@ -85,11 +85,11 @@
 
             <!-- Action Buttons -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Clear All" Click="ClearFields_Click" Width="120" Height="40" Background="Transparent" Foreground="Gray" BorderThickness="0" FontWeight="Bold" Margin="0,0,10,0" Cursor="Hand"/>
+               
                 <Button Content="CREATE PAYMENT" Click="CreatePayment_Click" Width="200" Height="40" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="20"/>
+                            <Setter Property="CornerRadius" Value="1"/>
                         </Style>
                     </Button.Resources>
                 </Button>

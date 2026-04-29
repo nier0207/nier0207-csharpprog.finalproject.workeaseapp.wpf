@@ -3,12 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
+        <!-- Linear Gradient Theme -->
+        <LinearGradientBrush x:Key="MainGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF5757" Offset="0.0"/>
+            <GradientStop Color="#FF52E3" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Standard Colors -->
         <SolidColorBrush x:Key="PrimaryPink" Color="#FF5CA8"/>
         <SolidColorBrush x:Key="DeepPurple" Color="#2D1B69"/>
         <SolidColorBrush x:Key="MainBackground" Color="#F5F0FF"/>
         <SolidColorBrush x:Key="CardBlue" Color="#3399FF"/>
         <SolidColorBrush x:Key="SidebarSelection" Color="#4B32A1"/>
 
+        <!-- Sidebar Button Style -->
         <Style x:Key="SidebarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -31,6 +39,7 @@
             </Style.Triggers>
         </Style>
 
+        <!-- Modern TextBox Style -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
             <Setter Property="Height" Value="35"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

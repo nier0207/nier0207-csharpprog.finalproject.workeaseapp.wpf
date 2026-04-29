@@ -37,10 +37,10 @@
                         </TextBox>
                     </StackPanel>
 
-                    <Button Content="Search" Width="120" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
+                    <Button Content="Search" Width="120" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
                         <Button.Resources>
                             <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="17"/>
+                                <Setter Property="CornerRadius" Value="1"/>
                             </Style>
                         </Button.Resources>
                     </Button>

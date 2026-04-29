@@ -24,7 +24,7 @@ namespace WorkeaseAdmin_WPF.Pages
 
         private void DeleteFee_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new FeesPage());
+            NavigationService.Navigate(new DeleteFeePage());
         }
 
         private void ClearFields_Click(object sender, RoutedEventArgs e)
