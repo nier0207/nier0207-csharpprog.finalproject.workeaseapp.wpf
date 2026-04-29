@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
@@ -23,6 +12,26 @@ namespace WorkeaseAdmin_WPF.Pages
         public HealthPage()
         {
             InitializeComponent();
+        }
+
+        // Navigation to Edit Health Page
+        private void EditHealth_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigation logic here
+            NavigationService.Navigate(new EditHealthPage());
+        }
+
+        // Navigation to Add Health Page
+        private void AddHealth_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigation logic here
+            NavigationService.Navigate(new AddHealthPage());
+        }
+
+        // Action for Delete Health Record
+        private void DeleteHealth_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DeleteHealthPage());
         }
     }
 }

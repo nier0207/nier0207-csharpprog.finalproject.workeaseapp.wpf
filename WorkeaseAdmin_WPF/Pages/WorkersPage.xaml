@@ -9,7 +9,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage Workers" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
+            <Button Content="Manage Workers" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
 
             <Button Content="Edit Worker" Click="EditWorker_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
 

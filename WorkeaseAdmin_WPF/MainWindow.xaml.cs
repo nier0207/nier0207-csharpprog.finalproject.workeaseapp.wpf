@@ -28,6 +28,8 @@ namespace WorkeaseAdmin_WPF
                     case "Children": MainFrame.Navigate(new ChildrenPage()); break;
                     case "Attendance": MainFrame.Navigate(new AttendancePage()); break; // ADD THIS
                     case "Health": MainFrame.Navigate(new HealthPage()); break;         // ADD THIS
+                    case "Fees":MainFrame.Navigate(new Pages.FeesPage());break;
+                    case "Reports":MainFrame.Navigate(new Pages.ReportsPage());break;
                 }
             }
         }

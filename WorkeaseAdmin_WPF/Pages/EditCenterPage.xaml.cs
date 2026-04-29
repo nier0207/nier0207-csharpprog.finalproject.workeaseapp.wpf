@@ -11,24 +11,25 @@ namespace WorkeaseAdmin_WPF.Pages
             InitializeComponent();
         }
 
-        private void ManageCenters_Click(object sender, RoutedEventArgs e)
+        private void SearchCenter_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new CentersPage());
+            if (string.IsNullOrEmpty(SearchCenterID.Text))
+            {
+                MessageBox.Show("Please enter a Center ID.");
+                return;
+            }
+            // Logic para i-load ang data
+            txtCenterName.Text = "Sample Center";
+            txtContactPerson.Text = "Juan Dela Cruz";
         }
 
-        private void AddCenter_Click(object sender, RoutedEventArgs e)
+        private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new AddCenterPage());
+            MessageBox.Show("Changes saved successfully!");
         }
 
-        private void EditCenter_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService?.Navigate(new EditCenterPage());
-        }
-
-        private void DeleteCenter_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService?.Navigate(new DeleteCenterPage());
-        }
+        private void ManageCenters_Click(object sender, RoutedEventArgs e) => this.NavigationService?.Navigate(new CentersPage());
+        private void AddCenter_Click(object sender, RoutedEventArgs e) => this.NavigationService?.Navigate(new AddCenterPage());
+        private void DeleteCenter_Click(object sender, RoutedEventArgs e) => this.NavigationService?.Navigate(new DeleteCenterPage());
     }
 }

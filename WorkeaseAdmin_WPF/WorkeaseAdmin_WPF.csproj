@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -62,6 +66,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -72,6 +79,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AddChildrenPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddFeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddHealthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,6 +118,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\DeleteFeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DeleteHealthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\DeleteWorkerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,11 +138,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\EditFeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditHealthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\EditWorkerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\FeesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HealthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReportsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +177,12 @@
     </Compile>
     <Compile Include="Pages\AddChildrenPage.xaml.cs">
       <DependentUpon>AddChildrenPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddFeePage.xaml.cs">
+      <DependentUpon>AddFeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddHealthPage.xaml.cs">
+      <DependentUpon>AddHealthPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddWorkerPage.xaml.cs">
       <DependentUpon>AddWorkerPage.xaml</DependentUpon>
@@ -156,6 +205,12 @@
     <Compile Include="Pages\DeleteChildPage.xaml.cs">
       <DependentUpon>DeleteChildPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DeleteFeePage.xaml.cs">
+      <DependentUpon>DeleteFeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DeleteHealthPage.xaml.cs">
+      <DependentUpon>DeleteHealthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DeleteWorkerPage.xaml.cs">
       <DependentUpon>DeleteWorkerPage.xaml</DependentUpon>
     </Compile>
@@ -165,11 +220,26 @@
     <Compile Include="Pages\EditChildPage.xaml.cs">
       <DependentUpon>EditChildPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EditFeePage.xaml.cs">
+      <DependentUpon>EditFeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditHealthPage.xaml.cs">
+      <DependentUpon>EditHealthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EditWorkerPage.xaml.cs">
       <DependentUpon>EditWorkerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\FeesPage.xaml.cs">
+      <DependentUpon>FeesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HealthPage.xaml.cs">
       <DependentUpon>HealthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReportsPage.xaml.cs">
+      <DependentUpon>ReportsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\WorkersPage.xaml.cs">
       <DependentUpon>WorkersPage.xaml</DependentUpon>

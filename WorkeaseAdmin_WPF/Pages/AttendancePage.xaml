@@ -5,53 +5,70 @@
 
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Sidebar Navigation -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Daily Logs" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Reports" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Attendance" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="20">
+        <Grid Grid.Column="1" Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                <ComboBox Width="150" Height="35" Margin="0,0,10,0" VerticalContentAlignment="Center" SelectedIndex="0">
-                    <ComboBoxItem Content="- Select Center -"/>
-                </ComboBox>
-                <DatePicker Width="150" Height="35" VerticalContentAlignment="Center"/>
-            </StackPanel>
-
-            <Border Grid.Row="1" Background="#F3E5F5" BorderBrush="#FF5CA8" BorderThickness="1">
-                <Grid>
-                    <StackPanel>
-                        <Border Background="{StaticResource PrimaryPink}" Height="60">
-                            <TextBlock Text="Attendance Monitoring" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <DataGrid AutoGenerateColumns="False" Background="Transparent" BorderThickness="0" HeadersVisibility="Column">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Child ID" Width="80"/>
-                                <DataGridTextColumn Header="Name" Width="*"/>
-                                <DataGridTextColumn Header="Center" Width="*"/>
-                                <DataGridTextColumn Header="Time In" Width="100"/>
-                                <DataGridTextColumn Header="Status" Width="100"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+            <!-- Search Bar Section (Kopyang-kopya sa Edit Center style) -->
+            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" Height="100" BorderBrush="#FF69B4" BorderThickness="2" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Bottom">
+                        <TextBlock Text="Search Child Name" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchChildBox" Width="250" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
-                    <TextBlock Text="/* Attendance records will show here */" Foreground="#85E15F" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0"/>
-                </Grid>
+
+                   
+                </StackPanel>
             </Border>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button Content="Export PDF" Width="150" Height="45" Background="{StaticResource CardBlue}" Foreground="White" BorderThickness="0" Margin="0,0,10,0"/>
-                <Button Content="Print" Width="120" Height="45" Background="#85E15F" Foreground="White" BorderThickness="0"/>
-            </StackPanel>
+            <!-- Attendance Table Section -->
+            <Border Grid.Row="1" Background="White" CornerRadius="10" BorderBrush="#FF69B4" BorderThickness="1" ClipToBounds="True">
+                <DockPanel>
+                    <!-- Table Header -->
+                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60">
+                        <TextBlock Text="ATTENDANCE MONITORING" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <Grid>
+                        <DataGrid AutoGenerateColumns="False" Background="Transparent" BorderThickness="0" 
+                                  HeadersVisibility="Column" GridLinesVisibility="Horizontal" 
+                                  RowHeight="40" AlternatingRowBackground="#FAF5FF">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#F3E5F5"/>
+                                    <Setter Property="Foreground" Value="#7E57C2"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Padding" Value="10,5"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="#DDD"/>
+                                </Style>
+                            </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Child ID" Binding="{Binding ChildID}" Width="100"/>
+                                <DataGridTextColumn Header="Full Name" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Center" Binding="{Binding Center}" Width="*"/>
+                                <DataGridTextColumn Header="Time In" Binding="{Binding TimeIn}" Width="120"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Empty State Message -->
+                        <TextBlock Text="/* Attendance records will show here */" Foreground="#BDC3C7" FontSize="14" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>

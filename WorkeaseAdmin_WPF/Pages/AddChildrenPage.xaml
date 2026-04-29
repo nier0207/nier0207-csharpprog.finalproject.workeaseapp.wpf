@@ -10,21 +10,28 @@
         </Grid.ColumnDefinitions>
 
         <!-- Navigation Sidebar -->
-        <StackPanel Grid.Column="0" Background="#1A0B2E">
-            <Button Content="Manage Children" Click="ManageChildren_Click" Background="#1A0B2E" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
-            <Button Content="Edit Child" Click="EditChild_Click" Background="#1A0B2E" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
-            <Button Content="Add Child" Background="#2ECC71" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+        <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
+            <Button Content="Manage Children" Click="ManageChildren_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="Edit Child" Click="EditChild_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+            <Button Content="Add Child" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
             <Button Content="Delete Child" Click="DeleteChild_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
+        <!-- Main Content Area -->
         <Grid Grid.Column="1" Margin="30">
-            <Border Background="#EBE3F1" CornerRadius="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>      <!-- Eto yung para sa Form -->
+                <RowDefinition Height="Auto"/>   <!-- Eto yung para sa Button sa labas -->
+            </Grid.RowDefinitions>
+
+            <!-- Form Panel -->
+            <Border Grid.Row="0" Background="#EBE3F1" CornerRadius="10" VerticalAlignment="Top">
                 <DockPanel>
-                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
-                        <TextBlock Text="Add Child" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border DockPanel.Dock="Top" Background="#38b6ff" Height="60" CornerRadius="10,10,0,0">
+                        <TextBlock Text="ADD NEW CHILD RECORD" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <StackPanel Margin="40,20">
+                    <StackPanel Margin="40,25">
                         <!-- Name Row -->
                         <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions>
@@ -33,32 +40,56 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="First name" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Height="35" BorderThickness="0"/>
+                                <TextBlock Text="First name" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
+                                <TextBox Height="35" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
                             </StackPanel>
                             <StackPanel Grid.Column="2">
-                                <TextBlock Text="Last name" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Height="35" BorderThickness="0"/>
+                                <TextBlock Text="Last name" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
+                                <TextBox Height="35" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
                             </StackPanel>
                         </Grid>
 
-                        <TextBlock Text="Guardian Name" FontWeight="Bold" Margin="0,10,0,5"/>
-                        <TextBox Height="35" BorderThickness="0" Margin="0,0,0,15"/>
+                        <TextBlock Text="Guardian Name" FontWeight="Bold" Margin="0,10,0,5" Foreground="#444"/>
+                        <TextBox Height="35" BorderThickness="0" Margin="0,0,0,15" VerticalContentAlignment="Center" Padding="10,0"/>
 
-                        <TextBlock Text="Birth Day" FontWeight="Bold" Margin="0,10,0,5"/>
-                        <DatePicker Height="35"/>
+                        <Grid Margin="0,10,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Birth Day" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
+                                <DatePicker Height="24" Background="White" BorderThickness="0"/>
+                            </StackPanel>
 
-                        <TextBlock Text="Gender" FontWeight="Bold" Margin="0,15,0,5"/>
-                        <StackPanel Orientation="Horizontal">
-                            <RadioButton Content="Male" Margin="0,0,20,0"/>
-                            <RadioButton Content="Female"/>
-                        </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Gender" FontWeight="Bold" Margin="0,0,0,8" Foreground="#444"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton Content="Male" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                                    <RadioButton Content="Female" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <TextBlock Text="/* Fill up all fields to register the child in the system." 
+                                   Foreground="#38b6ff" FontSize="12" Margin="0,20,0,0" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </DockPanel>
             </Border>
 
-            <Button Content="Create New Record" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                    Width="180" Height="45" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+            <!-- Action Button (Nasa Labas na ng Panel) -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                
+                <Button Content="CREATE RECORD" Width="200" Height="45" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

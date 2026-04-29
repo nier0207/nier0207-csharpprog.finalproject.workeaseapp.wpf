@@ -8,6 +8,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Sidebar Section -->
         <Border Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -27,9 +28,13 @@
                     <Button Content="Children" Style="{StaticResource SidebarButtonStyle}" Tag="Children" Click="Menu_Click"/>
                     <Button Content="Attendance" Style="{StaticResource SidebarButtonStyle}" Tag="Attendance" Click="Menu_Click"/>
                     <Button Content="Health" Style="{StaticResource SidebarButtonStyle}" Tag="Health" Click="Menu_Click"/>
+
+                    <!-- BAGONG DAGDAG: Fees at Reports -->
+                    <Button Content="Fees" Style="{StaticResource SidebarButtonStyle}" Tag="Fees" Click="Menu_Click"/>
+                    <Button Content="Reports" Style="{StaticResource SidebarButtonStyle}" Tag="Reports" Click="Menu_Click"/>
                 </StackPanel>
 
-                <Button Grid.Row="2" Background="#E91E63" Margin="10" BorderThickness="0" Height="45">
+                <Button Grid.Row="2" Background="#E91E63" Margin="10" BorderThickness="0" Height="45" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Logout" Foreground="White" VerticalAlignment="Center" FontWeight="Bold"/>
                     </StackPanel>
@@ -37,52 +42,53 @@
             </Grid>
         </Border>
 
+        <!-- Main Content Area -->
         <Grid Grid.Column="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!-- Top Header Bar -->
             <Border Grid.Row="0" Background="White" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
                 <DockPanel Margin="30,0">
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                         <StackPanel Margin="0,0,15,0" VerticalAlignment="Center">
                             <TextBlock Text="Reneir R. Rafols" 
-                           FontWeight="Bold" 
-                           FontSize="16"
-                           HorizontalAlignment="Right"/>
+                                       FontWeight="Bold" 
+                                       FontSize="16"
+                                       HorizontalAlignment="Right"/>
 
                             <TextBlock Text="rafols@workease.burgos.ph" 
-                           FontSize="11" 
-                           Foreground="#666666" 
-                           HorizontalAlignment="Right"
-                           Margin="0,2,0,0"/>
+                                       FontSize="11" 
+                                       Foreground="#666666" 
+                                       HorizontalAlignment="Right"
+                                       Margin="0,2,0,0"/>
 
                             <TextBlock Text="admin" 
-                           FontSize="11" 
-                           Foreground="Gray" 
-                           HorizontalAlignment="Right"/>
+                                       FontSize="11" 
+                                       Foreground="Gray" 
+                                       HorizontalAlignment="Right"/>
                         </StackPanel>
 
                         <Grid VerticalAlignment="Center">
                             <Ellipse Width="55" Height="55" Fill="{StaticResource PrimaryPink}"/>
-
                             <Path Data="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" 
-                      Fill="White" 
-                      Stretch="Uniform" 
-                      Width="25" 
-                      Height="25" 
-                      HorizontalAlignment="Center" 
-                      VerticalAlignment="Center"/>
+                                  Fill="White" 
+                                  Stretch="Uniform" 
+                                  Width="25" 
+                                  Height="25" 
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
 
                     <TextBlock x:Name="PageTitle" 
-                   Text="Dashboard" 
-                   VerticalAlignment="Center" 
-                   FontSize="28" 
-                   FontWeight="Bold" 
-                   Foreground="{StaticResource PrimaryPink}"/>
+                               Text="Dashboard" 
+                               VerticalAlignment="Center" 
+                               FontSize="28" 
+                               FontWeight="Bold" 
+                               Foreground="{StaticResource PrimaryPink}"/>
                 </DockPanel>
             </Border>
 

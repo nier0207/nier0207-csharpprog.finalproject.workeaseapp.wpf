@@ -2,17 +2,19 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Delete Center">
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Sidebar Navigation -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
-            <Button Content="Manage Centers" Click="ManageCenters_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
-            <Button Content="Edit Center" Click="EditCenter_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
-            <Button Content="Add Center" Click="AddCenter_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
-            <Button Content="Delete Center" Background="#B00020" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0"/>
+            <Button Content="Manage Centers" Click="ManageCenters_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
+            <Button Content="Edit Center" Click="EditCenter_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+            <Button Content="Add Center" Click="AddCenter_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+            <Button Content="Delete Center" Background="#B00020" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="25">
@@ -21,13 +23,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+            <!-- Search Section with RED BORDER -->
+            <Border Grid.Row="0" Background="White" BorderBrush="#e12749" BorderThickness="2" CornerRadius="10" Padding="15" Margin="0,0,0,20">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="0,0,15,0">
                         <TextBlock Text="Enter Center ID" FontSize="11" Foreground="Gray" Margin="0,0,0,3"/>
-                        <TextBox Width="150" Height="35" VerticalContentAlignment="Center" Padding="10,0"/>
+                        <TextBox x:Name="SearchCenterID" Width="150" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
                     <Button Content="Search Center" 
+                            Click="SearchCenter_Click"
                             Width="130" 
                             Height="35" 
                             Margin="0,14,0,0" 
@@ -39,28 +43,32 @@
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="1" Background="White" CornerRadius="15" BorderBrush="#B00020" BorderThickness="1" VerticalAlignment="Top">
+            <!-- Confirmation Section with RED BORDER -->
+            <Border Grid.Row="1" Background="White" CornerRadius="15" BorderBrush="#e12749" BorderThickness="2" VerticalAlignment="Top">
                 <StackPanel>
-                    <Border Background="#B00020" Height="55" CornerRadius="14,14,0,0">
+                    <Border Background="#B00020" Height="55" CornerRadius="13,13,0,0">
                         <TextBlock Text="CONFIRM DELETION" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
                     <StackPanel Margin="40,25">
                         <TextBlock Text="Name of Center" FontWeight="Bold" Foreground="#B00020" Margin="0,0,0,5"/>
-                        <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,20" Background="#F9F9F9" IsReadOnly="True" BorderBrush="#E0E0E0"/>
+                        <TextBox x:Name="txtCenterName" Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,20" Background="#F9F9F9" IsReadOnly="True" BorderBrush="#E0E0E0"/>
 
                         <TextBlock Text="Location" FontWeight="Bold" Foreground="#B00020" Margin="0,0,0,5"/>
-                        <TextBox Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,30" Background="#F9F9F9" IsReadOnly="True" BorderBrush="#E0E0E0"/>
+                        <TextBox x:Name="txtLocation" Height="40" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,30" Background="#F9F9F9" IsReadOnly="True" BorderBrush="#E0E0E0"/>
 
-                        <Button Content="DELETE CENTER" 
-                                Width="180" 
-                                Height="45" 
-                                Background="#B00020" 
-                                Foreground="White" 
-                                FontWeight="Bold" 
-                                BorderThickness="0" 
-                                HorizontalAlignment="Right"
-                                Cursor="Hand"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            
+                            <Button Content="DELETE CENTER" 
+                                    Click="ConfirmDelete_Click"
+                                    Width="180" 
+                                    Height="45" 
+                                    Background="#B00020" 
+                                    Foreground="White" 
+                                    FontWeight="Bold" 
+                                    BorderThickness="0" 
+                                    Cursor="Hand"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>

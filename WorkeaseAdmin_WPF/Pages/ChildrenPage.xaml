@@ -22,7 +22,7 @@
                     <Grid>
                         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" 
                                   Width="200" Height="35" Margin="15,0,0,0"
-                                  Background="#B388FF" Foreground="White" BorderThickness="0"
+                                  Background="#B388FF" Foreground="Gray" BorderThickness="0"
                                   VerticalContentAlignment="Center" Padding="10,0">
                             <ComboBoxItem Content="San Pascual" IsSelected="True"/>
                             <ComboBoxItem Content="Other Center..."/>
