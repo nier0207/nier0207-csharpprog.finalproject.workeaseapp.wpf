@@ -6,7 +6,7 @@
         WindowStyle="None" ResizeMode="NoResize"
         Background="Transparent" AllowsTransparency="True">
 
-    <Border CornerRadius="20" Margin="30" Background="White" MouseDown="Window_MouseDown">
+    <Border CornerRadius="8" Margin="30" Background="White" MouseDown="Window_MouseDown">
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" Color="#FFD1E8" ShadowDepth="2" Opacity="0.5"/>
         </Border.Effect>
@@ -17,8 +17,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Left Panel: Now using Linear Gradient -->
-            <Border Grid.Column="0" Background="{StaticResource MainGradient}" CornerRadius="20,0,0,20">
+            <Border Grid.Column="0" Background="{StaticResource MainGradient}" CornerRadius="8,0,0,8">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock Text="WorkEase" Foreground="White" FontSize="42" FontWeight="Bold" HorizontalAlignment="Center"/>
                     <TextBlock Text="ADMIN MANAGEMENT SYSTEM" Foreground="White" Opacity="0.8" FontSize="14" HorizontalAlignment="Center" Margin="0,5,0,0"/>
@@ -26,11 +25,10 @@
                 </StackPanel>
             </Border>
 
-            <!-- Right Panel: Login Form -->
-            <Grid Grid.Column="1" Margin="40">
+            <Grid Grid.Column="1" Margin="22,29,22,29">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Welcome Back!" FontSize="26" FontWeight="Bold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
-                    <TextBlock Text="Authorized personnel only. Please sign in." Foreground="Gray" Margin="0,0,0,25" FontSize="13"/>
+                    <TextBlock Text="Authorized personnel only. Please login!" Foreground="Gray" Margin="0,0,0,25" FontSize="13"/>
 
                     <TextBlock Text="Username" FontWeight="SemiBold" Foreground="{StaticResource DeepPurple}" Margin="0,0,0,5"/>
                     <Border BorderBrush="#EEEEEE" BorderThickness="1.5" CornerRadius="8" Margin="0,0,0,15" Background="#FAFAFA">
@@ -42,14 +40,28 @@
                         <PasswordBox x:Name="txtPassword" Height="38" BorderThickness="0" Padding="12,0" VerticalContentAlignment="Center" Background="Transparent"/>
                     </Border>
 
-                    <!-- Login Button: Using the Gradient Theme -->
-                    <Button Content="LOGIN" Click="LoginButton_Click" Height="45" 
-                            Background="{StaticResource MainGradient}" Foreground="White" 
-                            FontWeight="Bold" FontSize="15" BorderThickness="0" Cursor="Hand">
+                    <TextBlock x:Name="lblError"
+                               Foreground="Red"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10"
+                               Visibility="Collapsed"/>
+
+                    <Button x:Name="btnLogin"
+                            Content="LOGIN"
+                            Click="LoginButton_Click"
+                            Height="45"
+                            Background="{StaticResource MainGradient}"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            FontSize="15"
+                            BorderThickness="0"
+                            Cursor="Hand">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}" CornerRadius="22">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>

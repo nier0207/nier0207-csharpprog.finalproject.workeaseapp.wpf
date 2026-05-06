@@ -3,6 +3,18 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Edit Child">
 
+    <Page.Resources>
+        <!-- Specialized Style to match the Pink Theme for Controls -->
+        <Style x:Key="PinkInputStyle" TargetType="Control">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -16,49 +28,85 @@
             <Button Content="Delete Child" Click="DeleteChild_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="30,30,30,10">
-            <Border Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" BorderBrush="#FF69B4" BorderThickness="1" Height="90">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel>
+        <Grid Grid.Column="1" Margin="30">
+            <Border Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" Height="100" BorderBrush="#FF69B4" BorderThickness="2">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Bottom">
                         <TextBlock Text="Enter Child ID to Edit" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
-                        <TextBox x:Name="SearchChildID" Width="250" Height="26" VerticalContentAlignment="Center" Padding="10,0"/>
+                        <TextBox x:Name="SearchChildID" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
-                    <Button Content="Search Child" Click="SearchChild_Click" Width="150" Height="29" Margin="20,18,0,0" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+
+                    <Button Content="Search Child" Click="SearchChild_Click" Width="150" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
                 </StackPanel>
             </Border>
 
-            <Border Background="#EBE3F1" CornerRadius="10" Margin="0,95,0,80">
+            <Border Background="#EBE3F1" CornerRadius="10" Margin="0,115,0,49">
                 <DockPanel>
                     <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
                         <TextBlock Text="EDIT CHILD DETAILS" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <StackPanel Margin="40,25">
-                        <Grid Margin="0,0,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="First Name" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Height="38" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Last Name" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Height="38" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-                        </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="40,20">
+                            <Grid Margin="0,0,0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="First Name" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="txtFirstName" Style="{StaticResource PinkInputStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Last Name" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="txtLastName" Style="{StaticResource PinkInputStyle}"/>
+                                </StackPanel>
+                            </Grid>
 
-                        <TextBlock Text="/* Review and update the child's information accurately." 
-                                   Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="14" FontWeight="SemiBold"/>
-                    </StackPanel>
+                            <!-- Center Selection (Full Width for emphasis) -->
+                            <StackPanel Margin="0,0,0,20">
+                                <TextBlock Text="Assigned Center" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="cmbCenter" Style="{StaticResource PinkInputStyle}"
+                                          DisplayMemberPath="CenterName" SelectedValuePath="CenterId"/>
+                            </StackPanel>
+
+                            <!-- Birth Date and Gender Row -->
+                            <Grid Margin="0,0,0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Birth Date" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <DatePicker x:Name="dpBirthDate" Height="40" VerticalContentAlignment="Center" BorderThickness="0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Gender" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <ComboBox x:Name="cmbGender" Style="{StaticResource PinkInputStyle}">
+                                        <ComboBoxItem Content="Male"/>
+                                        <ComboBoxItem Content="Female"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock Text="/* Review and update the child's information accurately." 
+                                       Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
+                        </StackPanel>
+                    </ScrollViewer>
                 </DockPanel>
             </Border>
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,5">
-
-                <Button Content="Save Changes" Width="180" Height="45" Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,-15">
+                <Button Content="Save Changes" Click="SaveChanges_Click" Width="160" Height="45"
+                        Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

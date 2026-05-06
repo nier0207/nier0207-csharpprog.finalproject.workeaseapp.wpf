@@ -1,36 +1,60 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using WorkeaseAdmin_WPF.Services;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
     public partial class ChildrenPage : Page
     {
-        public ChildrenPage()
+        private readonly ChildService _childService;
+
+        public ChildrenPage(ChildService childService)
         {
             InitializeComponent();
+            _childService = childService;
         }
 
-        // ITO ANG HINAHANAP NA DEFINITION:
+        // IMPORTANT: This must exist because of Loaded="Page_Loaded" in XAML
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadChildrenData();
+        }
+
+        private async Task LoadChildrenData()
+        {
+            try
+            {
+                var children = await _childService.GetAllChildrenAsync();
+                if (children != null)
+                {
+                    ChildrenListView.ItemsSource = children;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading children: {ex.Message}");
+            }
+        }
+
         private void AddChild_Click(object sender, RoutedEventArgs e)
         {
-            // Ang logic para lumipat sa AddChildrenPage
-            this.NavigationService?.Navigate(new AddChildrenPage());
+            var page = App.Services.GetRequiredService<AddChildrenPage>();
+            this.NavigationService?.Navigate(page);
         }
 
-        // Para sa ibang buttons sa sidebar kung meron man:
         private void EditChild_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new EditChildPage());
+            var page = App.Services.GetRequiredService<EditChildPage>();
+            this.NavigationService?.Navigate(page);
         }
 
         private void DeleteChild_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new DeleteChildPage());
-        }
-
-        private void ManageChildren_Click(object sender, RoutedEventArgs e)
-        {
-            // Stay lang sa page na ito
+            var page = App.Services.GetRequiredService<DeleteChildPage>();
+            this.NavigationService?.Navigate(page);
         }
     }
 }

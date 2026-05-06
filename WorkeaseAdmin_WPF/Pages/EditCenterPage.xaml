@@ -45,12 +45,18 @@
             <!-- Edit Form Section -->
             <Border Background="#EBE3F1" CornerRadius="10" Margin="0,115,0,49">
                 <DockPanel>
+                    <!-- Header -->
                     <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
                         <TextBlock Text="EDIT CENTER" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
                     <StackPanel Margin="40,20">
-                        <!-- Barangay and Worker Selection -->
+                        <!-- editable -->
+                        <StackPanel Margin="0,0,0,20">
+                            <TextBlock Text="Center Name" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtCenterName" Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
+                        </StackPanel>
+
                         <Grid Margin="0,0,0,20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -58,42 +64,29 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
+                            <!-- editable -->
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="Barangay" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <ComboBox x:Name="cmbBarangay" Style="{StaticResource PinkComboBox}" Foreground="Gray">
-                                    <ComboBoxItem Content="Barangay 1" IsSelected="True"/>
-                                </ComboBox>
+                                <TextBlock Text="Center Location" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox x:Name="txtCenterLocation" Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
                             </StackPanel>
 
+                            <!-- VIEW ONLY (Read Only) -->
                             <StackPanel Grid.Column="2">
-                                <TextBlock Text="CDW worker" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <ComboBox x:Name="cmbWorker" Style="{StaticResource PinkComboBox}" Foreground="Gray">
-                                    <ComboBoxItem Content="Worker Name" IsSelected="True"/>
-                                </ComboBox>
+                                <TextBlock Text="CDW Center Holder (Read-Only)" Foreground="Gray" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox x:Name="txtCdwName" Height="40" Background="#F0F0F0" Foreground="Gray" IsReadOnly="True" Focusable="False" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
                             </StackPanel>
                         </Grid>
 
-                        <!-- Center Name and Contact Person -->
-                        <Grid Margin="0,0,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <!-- VIEW ONLY -->
+                        <StackPanel>
+                            <TextBlock Text="Registered Children (Read-Only)" Foreground="Gray" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <Border Background="#F9F9F9" Height="150" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+                                <ListBox x:Name="listChildren" BorderThickness="0" Background="Transparent" Foreground="Gray" Focusable="False" SelectionMode="Single"/>
+                            </Border>
+                        </StackPanel>
 
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Center name" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox x:Name="txtCenterName" Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Contact person" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox x:Name="txtContactPerson" Height="40" Background="White" BorderThickness="0" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <TextBlock Text="/* Modify the fields above and save to update the center's records." 
-                                   Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
+                        <TextBlock Text="/* Only Name and Location can be updated. CDW and Children records are managed separately." 
+                           Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
                     </StackPanel>
                 </DockPanel>
             </Border>

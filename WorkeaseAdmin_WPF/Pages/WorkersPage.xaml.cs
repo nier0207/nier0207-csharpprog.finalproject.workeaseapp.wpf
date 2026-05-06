@@ -1,45 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
+using WorkeaseAdmin_WPF.Services;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
-    /// <summary>
-    /// Interaction logic for WorkersPage.xaml
-    /// </summary>
     public partial class WorkersPage : Page
     {
-        public WorkersPage()
+        private readonly UserService _userService;
+
+        public WorkersPage(UserService userService)
         {
             InitializeComponent();
+            _userService = userService;
         }
-        // Sa loob ng bawat class (Add, Edit, Delete Worker Pages)
-        private void ManageWorkers_Click(object sender, RoutedEventArgs e)
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new WorkersPage());
+            await RefreshData();
         }
-        private void AddWorker_Click(object sender, RoutedEventArgs e)
+
+        public async Task RefreshData()
         {
-            this.NavigationService?.Navigate(new AddWorkerPage());
+            try
+            {
+                var workers = await _userService.GetAllUsersAsync();
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    WorkersListView.ItemsSource = workers;
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data: {ex.Message}");
+            }
         }
+
         private void EditWorker_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new EditWorkerPage());
+            var page = App.Services.GetRequiredService<EditWorkerPage>();
+            this.NavigationService?.Navigate(page);
         }
+
+        private void AddWorker_Click(object sender, RoutedEventArgs e)
+        {
+            var page = App.Services.GetRequiredService<AddWorkerPage>();
+            this.NavigationService?.Navigate(page);
+        }
+
         private void DeleteWorker_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService?.Navigate(new DeleteWorkerPage());
+            var page = App.Services.GetRequiredService<DeleteWorkerPage>();
+            this.NavigationService?.Navigate(page);
         }
     }
 }

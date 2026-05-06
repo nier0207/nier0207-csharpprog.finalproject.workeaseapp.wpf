@@ -54,22 +54,25 @@
             </Grid.RowDefinitions>
 
             <!-- Top Header Bar -->
-            <Border Grid.Row="0" Background="White" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+            <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="0,0,0,2">
                 <DockPanel Margin="30,0">
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                         <StackPanel Margin="0,0,15,0" VerticalAlignment="Center">
-                            <TextBlock Text="Reneir R. Rafols" 
+                            <TextBlock x:Name="txtUserName"
+                                       Text="Username" 
                                        FontWeight="Bold" 
                                        FontSize="16"
                                        HorizontalAlignment="Right"/>
 
-                            <TextBlock Text="rafols@workease.burgos.ph" 
+                            <TextBlock x:Name="txtUserEmail"
+                                       Text="example@workease.com" 
                                        FontSize="11" 
                                        Foreground="#666666" 
                                        HorizontalAlignment="Right"
                                        Margin="0,2,0,0"/>
 
-                            <TextBlock Text="admin" 
+                            <TextBlock x:Name="txtUserType"
+                                       Text="usertype" 
                                        FontSize="11" 
                                        Foreground="Gray" 
                                        HorizontalAlignment="Right"/>

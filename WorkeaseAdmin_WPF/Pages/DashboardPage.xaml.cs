@@ -1,28 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WorkeaseAdmin_WPF.Services;
 
 namespace WorkeaseAdmin_WPF.Pages
 {
-    /// <summary>
-    /// Interaction logic for DashboardPage.xaml
-    /// </summary>
     public partial class DashboardPage : Page
     {
-        public DashboardPage()
+        private readonly DashboardService _dashboardService;
+
+        public DashboardPage(DashboardService dashboardService)
         {
             InitializeComponent();
+            _dashboardService = dashboardService;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadDashboardSummaryAsync();
+        }
+
+        private async Task LoadDashboardSummaryAsync()
+        {
+            try
+            {
+                var summary = await _dashboardService.GetDashboardSummaryAsync();
+
+                txtCenterTotalNo.Text = summary.TotalCenters.ToString();
+                txtUserTotalNo.Text = summary.TotalUsers.ToString();
+                txtChildrenTotalNo.Text = summary.TotalChildren.ToString();
+                txtAbnormalHealthTotalNo.Text = summary.TotalAbnormalChildren.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading dashboard summary: {ex.Message}",
+                                "Dashboard Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+            }
         }
     }
 }

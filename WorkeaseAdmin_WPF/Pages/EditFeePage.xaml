@@ -3,16 +3,26 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Edit Payment Record">
 
+    <Page.Resources>
+        <Style x:Key="PinkComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar Navigation (Same Sub-nav) -->
+        <!-- Sidebar Navigation -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="View Fees" Click="BackToFees_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
-            <Button Content="Edit Payment" Background="{StaticResource SidebarSelection}" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
+            <Button Content="Edit Payment" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
             <Button Content="Add Payment" Click="AddFee_Click" Background="#38b6ff" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
             <Button Content="Delete Record" Click="DeleteFee_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
@@ -20,74 +30,137 @@
         <!-- Main Content -->
         <Grid Grid.Column="1" Margin="30">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="220"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Edit Form Panel (Pink Theme) -->
-            <Border Grid.Row="0" Background="White" CornerRadius="10" VerticalAlignment="Top" BorderBrush="#FF69B4" BorderThickness="1.5">
-                <DockPanel>
-                    <!-- Header turned Pink -->
-                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="60" CornerRadius="10,10,0,0">
-                        <TextBlock Text="EDIT PAYMENT RECORD" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-
-                    <StackPanel Margin="40,25">
-                        <!-- Child Name (ReadOnly for Edit) -->
-                        <TextBlock Text="Child Full Name" FontWeight="Bold" Margin="0,0,0,5" Foreground="#FF69B4"/>
-                        <TextBox x:Name="txtChildName" Height="35" IsReadOnly="True" Background="#FAF5FF" BorderThickness="1" BorderBrush="#F3E5F5" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15"/>
-
-                        <Grid Margin="0,10,0,15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Amount Paid -->
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Amount (PHP)" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <TextBox x:Name="AmountBox" Height="35" BorderThickness="1" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-
-                            <!-- Date of Payment -->
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Date of Payment" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <DatePicker x:Name="PaymentDatePicker" Height="35" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#DDD"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <!-- Fee Type -->
-                        <TextBlock Text="Fee Category" FontWeight="Bold" Margin="0,10,0,5" Foreground="#444"/>
-                        <ComboBox x:Name="FeeTypeCombo" Height="35" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#DDD">
-                            <ComboBoxItem Content="Tuition Fee"/>
-                            <ComboBoxItem Content="Miscellaneous Fee"/>
-                            <ComboBoxItem Content="Feeding Program"/>
-                            <ComboBoxItem Content="Uniform/Books"/>
-                            <ComboBoxItem Content="Other"/>
-                        </ComboBox>
-
-                        <!-- Remarks/Receipt No. -->
-                        <TextBlock Text="Receipt No. / Remarks" FontWeight="Bold" Margin="0,20,0,5" Foreground="#444"/>
-                        <TextBox x:Name="RemarksBox" Height="60" BorderThickness="1" BorderBrush="#DDD" TextWrapping="Wrap" AcceptsReturn="True" Padding="10"/>
-
-                        <TextBlock Text="/* Review changes carefully before saving */" 
-                                   Foreground="#FF69B4" FontSize="12" Margin="0,20,0,0" HorizontalAlignment="Center" FontStyle="Italic"/>
+            <!-- 1. Search Bar Section -->
+            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="2" Margin="0,0,0,15">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Bottom">
+                        <TextBlock Text="Search Receipt / Name" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchFeeBox" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
-                </DockPanel>
+
+                    <StackPanel VerticalAlignment="Bottom" Margin="20,0,0,0">
+                        <TextBlock Text="Filter by Center Name" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cmbCenterSearch" Width="200" Height="35" VerticalContentAlignment="Center" BorderBrush="#DDD" 
+                                  DisplayMemberPath="CenterName" SelectedValuePath="CenterId"/>
+                    </StackPanel>
+
+                    <Button Content="Search" Click="Search_Click" Width="100" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" 
+                            Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+                </StackPanel>
             </Border>
 
-            <!-- Action Buttons -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-               
-                <Button Content="UPDATE PAYMENT" Click="UpdatePayment_Click" Width="200" Height="40" Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="1"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
+            <!-- 2. Fees List View -->
+            <Border Grid.Row="1" Background="White" CornerRadius="10" BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,15">
+                <ListView x:Name="FeesListView" 
+                          Background="Transparent" 
+                          BorderThickness="0" 
+                          Margin="5"
+                          SelectionMode="Single"
+                          SelectionChanged="FeesListView_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Receipt #" DisplayMemberBinding="{Binding FeeRecordReceiptNo}" Width="90"/>
+                            <GridViewColumn Header="Full Name" DisplayMemberBinding="{Binding ChildName}" Width="140"/>
+                            <GridViewColumn Header="Month" DisplayMemberBinding="{Binding FeeMonth}" Width="80"/>
+                            <GridViewColumn Header="Year" DisplayMemberBinding="{Binding FeeYear}" Width="60"/>
+                            <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding FeeMonthlyAmount, StringFormat=\{0:C\}}" Width="100"/>
+                            <GridViewColumn Header="Status" Width="90">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="txtStatus" Text="Unpaid" FontWeight="Bold"/>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsPaid}" Value="True">
+                                                <Setter TargetName="txtStatus" Property="Text" Value="Paid"/>
+                                                <Setter TargetName="txtStatus" Property="Foreground" Value="LimeGreen"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding FeeDueDate, StringFormat=\{0:MM/dd/yyyy\}}" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>
+
+            <!-- 3. Edit Form Section -->
+            <Border Grid.Row="2" Background="#EBE3F1" CornerRadius="10">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="#FF69B4" Height="40" CornerRadius="10,10,0,0">
+                        <TextBlock Text="EDIT PAYMENT RECORD DETAILS" Foreground="White" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="25,25">
+                            <!-- Row 1: Receipt No and Child Name (Read-Only) -->
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Receipt Number" FontWeight="Bold" Margin="0,0,0,5" FontSize="12"/>
+                                    <TextBox x:Name="txtReceiptNo" IsReadOnly="True" Background="#F0F0F0" Height="30" VerticalContentAlignment="Center" Padding="8,0" BorderBrush="#DDD"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Selected Child" FontWeight="Bold" Margin="0,0,0,5" FontSize="12"/>
+                                    <TextBox x:Name="txtChildName" IsReadOnly="True" Background="#F0F0F0" Height="30" VerticalContentAlignment="Center" Padding="8,0" BorderBrush="#DDD"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Row 2: Billing Month and Billing Year -->
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Billing Month" FontWeight="Bold" Margin="0,0,0,5" FontSize="12"/>
+                                    <ComboBox x:Name="cmbFeeMonth" Height="30" VerticalContentAlignment="Center" BorderBrush="#DDD">
+                                        <ComboBoxItem Content="January" Tag="1"/>
+                                        <ComboBoxItem Content="February" Tag="2"/>
+                                        <ComboBoxItem Content="March" Tag="3"/>
+                                        <ComboBoxItem Content="April" Tag="4"/>
+                                        <ComboBoxItem Content="May" Tag="5"/>
+                                        <ComboBoxItem Content="June" Tag="6"/>
+                                        <ComboBoxItem Content="July" Tag="7"/>
+                                        <ComboBoxItem Content="August" Tag="8"/>
+                                        <ComboBoxItem Content="September" Tag="9"/>
+                                        <ComboBoxItem Content="October" Tag="10"/>
+                                        <ComboBoxItem Content="November" Tag="11"/>
+                                        <ComboBoxItem Content="December" Tag="12"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Billing Year" FontWeight="Bold" Margin="0,0,0,5" FontSize="12"/>
+                                    <ComboBox x:Name="cmbFeeYear" Height="30" VerticalContentAlignment="Center" BorderBrush="#DDD">
+                                        <ComboBoxItem Content="2024"/>
+                                        <ComboBoxItem Content="2025"/>
+                                        <ComboBoxItem Content="2026"/>
+                                        <ComboBoxItem Content="2027"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Row 3: Amount -->
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="Amount (PHP)" FontWeight="Bold" Margin="0,0,0,5" FontSize="12"/>
+                                <TextBox x:Name="txtFeeAmount" Height="30" VerticalContentAlignment="Center" Padding="8,0" Background="White" BorderThickness="1" BorderBrush="#DDD"/>
+                            </StackPanel>
+
+                            <Button Content="UPDATE PAYMENT" Click="UpdatePayment_Click" Width="180" Height="40" Margin="0,20,0,0" 
+                                    Background="#FF69B4" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>

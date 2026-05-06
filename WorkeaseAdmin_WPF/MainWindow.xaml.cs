@@ -1,16 +1,34 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
-using WorkeaseAdmin_WPF.Pages; // Siguraduhin na may 'Pages' folder ka
+using WorkeaseAdmin_WPF.Pages;
+using WorkeaseAdmin_WPF.Services;
 
 namespace WorkeaseAdmin_WPF
 {
     public partial class MainWindow : Window
     {
+        private readonly SessionManager _session;
+
         public MainWindow()
         {
             InitializeComponent();
-            // Load Dashboard by default
-            MainFrame.Navigate(new DashboardPage());
+
+            _session = App.Services.GetRequiredService<SessionManager>();
+            var profile = _session.GetProfile();
+
+            if (profile is null)
+            {
+                MessageBox.Show("User profile not found. Please log in again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+                return;
+            }
+
+            txtUserName.Text = profile.UserName ?? "User";
+            txtUserEmail.Text = profile.UserEmail ?? "No Email";
+            txtUserType.Text = profile.UserType ?? "Staff";
+
+            MainFrame.Navigate(App.Services.GetRequiredService<DashboardPage>());
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
@@ -22,14 +40,30 @@ namespace WorkeaseAdmin_WPF
 
                 switch (tag)
                 {
-                    case "Dashboard": MainFrame.Navigate(new DashboardPage()); break;
-                    case "Centers": MainFrame.Navigate(new CentersPage()); break;
-                    case "Workers": MainFrame.Navigate(new WorkersPage()); break;
-                    case "Children": MainFrame.Navigate(new ChildrenPage()); break;
-                    case "Attendance": MainFrame.Navigate(new AttendancePage()); break; // ADD THIS
-                    case "Health": MainFrame.Navigate(new HealthPage()); break;         // ADD THIS
-                    case "Fees":MainFrame.Navigate(new Pages.FeesPage());break;
-                    case "Reports":MainFrame.Navigate(new Pages.ReportsPage());break;
+                    case "Dashboard":
+                        MainFrame.Navigate(App.Services.GetRequiredService<DashboardPage>());
+                        break;
+                    case "Centers":
+                        MainFrame.Navigate(App.Services.GetRequiredService<CentersPage>());
+                        break;
+                    case "Workers":
+                        MainFrame.Navigate(App.Services.GetRequiredService<WorkersPage>());
+                        break;
+                    case "Children":
+                        MainFrame.Navigate(App.Services.GetRequiredService<ChildrenPage>());
+                        break;
+                    case "Attendance":
+                        MainFrame.Navigate(App.Services.GetRequiredService<AttendancePage>());
+                        break;
+                    case "Health":
+                        MainFrame.Navigate(App.Services.GetRequiredService<HealthPage>());
+                        break;
+                    case "Fees":
+                        MainFrame.Navigate(App.Services.GetRequiredService<FeesPage>());
+                        break;
+                    case "Reports":
+                        MainFrame.Navigate(App.Services.GetRequiredService<ReportsPage>());
+                        break;
                 }
             }
         }

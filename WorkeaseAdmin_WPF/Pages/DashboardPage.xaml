@@ -1,24 +1,87 @@
 ﻿<Page x:Class="WorkeaseAdmin_WPF.Pages.DashboardPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Dashboard">
+      Title="Dashboard"
+      Loaded="Page_Loaded">
     <UniformGrid Columns="3" Rows="2" Margin="20">
-        <Border Background="#F27E8C" CornerRadius="3" Margin="15">
-            <TextBlock Text="Number of Centers" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Border Background="#F27E8C" CornerRadius="10" Margin="15">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="txtCenterTotalNo"
+                           FontSize="48"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="0"/>
+                <TextBlock Text="Number of Centers" 
+                           FontSize="20" 
+                           Foreground="#444"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextAlignment="Center" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Border>
-        <Border Background="#8A61FF" CornerRadius="3" Margin="15">
-            <TextBlock Text="Number of workers" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Border Background="#8A61FF" CornerRadius="10" Margin="15">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="txtUserTotalNo"
+                           FontSize="48"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="0"/>
+                <TextBlock Text="Number of Workers" 
+                           Foreground="#444"
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextAlignment="Center" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Border>
-        <Border Background="#C576EE" CornerRadius="3" Margin="15">
-            <TextBlock Text="Number of children" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Border Background="#C576EE" CornerRadius="10" Margin="15">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="txtChildrenTotalNo"
+                           FontSize="48"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="0"/>
+                <TextBlock Text="Number of Children" 
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextAlignment="Center" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Border>
-        <Border Background="#86E05E" CornerRadius="3" Margin="15">
-            <TextBlock Text="Display number of inactive accounts" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Border Background="#86E05E" CornerRadius="10" Margin="15">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="txtAbnormalHealthTotalNo"
+                           FontSize="48"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="0"/>
+                <TextBlock Text="Accumulated Abnormal Health of Children" 
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextAlignment="Center" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Border>
-        <Border Background="#5E8BFF" CornerRadius="3" Margin="15">
-            <TextBlock Text="Accumulated abnormal childrens" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Border Background="#5E8BFF" CornerRadius="10" Margin="15">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="txtFeeTotalAccumulated"
+                           FontSize="48"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="₱0.00"/>
+                <TextBlock Text="Total Accumulated Fees" 
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           TextAlignment="Center" 
+                           TextWrapping="Wrap"/>
+            </StackPanel>
         </Border>
-        <Border Background="#FF8534" CornerRadius="3" Margin="15">
+        <Border Background="#FF8534" CornerRadius="10" Margin="15">
             <TextBlock Text="Performance of childrens" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
         </Border>
     </UniformGrid>

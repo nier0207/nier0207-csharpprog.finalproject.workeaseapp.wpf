@@ -3,6 +3,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Delete Health Record">
 
+    <Page.Resources>
+        <Style x:Key="ReadOnlyInputStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -18,73 +32,96 @@
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="30">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Search Section (Kopyang-kopya sa Edit Center style) -->
-            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" Height="100" BorderBrush="#e12749" BorderThickness="2" Margin="0,0,0,20">
+            <!-- Search Section -->
+            <Border Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" Height="100" BorderBrush="#e12749" BorderThickness="2">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <StackPanel VerticalAlignment="Bottom">
-                        <TextBlock Text="Search Health ID or Name to Delete" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
-                        <TextBox x:Name="SearchDeleteBox" Width="250" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
+                        <TextBlock Text="Enter Child ID / Name" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchHealthBox" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
 
-                    <Button Content="Search" Width="120" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" Background="#e12749" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+                    <StackPanel VerticalAlignment="Bottom" Margin="20,0,0,0">
+                        <TextBlock Text="Filter by Center Name" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cmbCenterSearch" Width="200" Height="35" VerticalContentAlignment="Center" BorderBrush="#DDD" 
+                                  DisplayMemberPath="CenterName" SelectedValuePath="CenterId"/>
+                    </StackPanel>
+
+                    <Button Content="Search Records" Click="Search_Click" Width="130" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" 
+                            Background="#e12749" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
                 </StackPanel>
             </Border>
 
-            <!-- Record Details Panel (Display only) -->
-            <Border Grid.Row="1" Background="White" CornerRadius="10" VerticalAlignment="Top" BorderBrush="#e12749" BorderThickness="1">
+            <!-- Table Section (Recoded ListView) -->
+            <Border Background="#EBE3F1" CornerRadius="10" Margin="0,115,0,60">
                 <DockPanel>
                     <Border DockPanel.Dock="Top" Background="#e12749" Height="60" CornerRadius="10,10,0,0">
-                        <TextBlock Text="CONFIRM RECORD FOR DELETION" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="CONFIRM HEALTH RECORD DELETION" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <StackPanel Margin="40,20">
-                        <TextBlock Text="Child Name" FontWeight="Bold" Margin="0,0,0,5" Foreground="#e12749"/>
-                        <TextBox x:Name="txtChildName" Height="35" IsReadOnly="True" Background="#FAFAFA" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,-5"/>
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                        <Grid Margin="0,20,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <!-- Recoded ListView for HealthSummaryDto -->
+                        <ListView x:Name="HealthListView" Grid.Row="0" Background="White" BorderBrush="#DDD" BorderThickness="1" 
+                                  SelectionMode="Single" SelectionChanged="HealthListView_SelectionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding HealthRecordId}" Width="45"/>
+                                    <GridViewColumn Header="Child Name" DisplayMemberBinding="{Binding ChildName}" Width="140"/>
+                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding HealthRecordCreatedAt, StringFormat=\{0:MM/dd/yyyy\}}" Width="85"/>
+                                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding HealthWeightKg, StringFormat=\{0:F2\}}" Width="60"/>
+                                    <GridViewColumn Header="Height" DisplayMemberBinding="{Binding HealthHeightCm, StringFormat=\{0:F1\}}" Width="60"/>
 
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Weight (kg)" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <TextBox x:Name="WeightBox" Height="35" IsReadOnly="True" Background="#FAFAFA" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
+                                    <!-- Status Column for identification -->
+                                    <GridViewColumn Header="BMI Status" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock x:Name="txtBmi" Text="{Binding BmiStatus}" FontWeight="Bold"/>
+                                                <DataTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding BmiStatus}" Value="Normal">
+                                                        <Setter TargetName="txtBmi" Property="Foreground" Value="LimeGreen"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding BmiStatus}" Value="Underweight">
+                                                        <Setter TargetName="txtBmi" Property="Foreground" Value="OrangeRed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding BmiStatus}" Value="Overweight">
+                                                        <Setter TargetName="txtBmi" Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
 
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Height (cm)" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <TextBox x:Name="HeightBox" Height="35" IsReadOnly="True" Background="#FAFAFA" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0"/>
-                            </StackPanel>
-                        </Grid>
+                                    <GridViewColumn Header="Recorded By" DisplayMemberBinding="{Binding RecordedUserName}" Width="110"/>
+                                    <GridViewColumn Header="Notes" DisplayMemberBinding="{Binding HealthNotes, TargetNullValue='---'}" Width="140"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
-                        <TextBlock Text="Nutritional Status" FontWeight="Bold" Margin="0,10,0,5" Foreground="#444"/>
-                        <TextBox x:Name="StatusBox" Height="35" IsReadOnly="True" Background="#FAFAFA" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0"/>
-
-                        <TextBlock Text="Remarks" FontWeight="Bold" Margin="0,15,0,5" Foreground="#444"/>
-                        <TextBox x:Name="RemarksBox" Height="50" IsReadOnly="True" Background="#FAFAFA" BorderBrush="#DDD" TextWrapping="Wrap" Padding="10"/>
-                    </StackPanel>
+                        <!-- Warning Message -->
+                        <Border Grid.Row="1" Background="#FFEBEE" Padding="15" CornerRadius="5" BorderBrush="#FFCDD2" BorderThickness="1" Margin="0,15,0,0">
+                            <TextBlock Text="⚠️ WARNING: Deletion is permanent. Select a row above to enable the Delete button." 
+                                       Foreground="#B71C1C" TextWrapping="Wrap" FontSize="13" FontWeight="SemiBold" TextAlignment="Center"/>
+                        </Border>
+                    </Grid>
                 </DockPanel>
             </Border>
 
-            <!-- Footer Action Buttons -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Content="Discard" Click="BackToHealth_Click" Width="120" Height="40" Background="Transparent" Foreground="Gray" BorderThickness="0" FontWeight="Bold" Margin="0,0,10,0" Cursor="Hand"/>
-                <Button Content="DELETE RECORD" Click="ConfirmDelete_Click" Width="180" Height="40" Background="#e12749" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="20"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
+            <!-- Action Button -->
+            <Button Content="DELETE SELECTED RECORD" 
+                    Click="ConfirmDelete_Click" 
+                    Width="220" Height="45"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Background="#e12749" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Grid>
 </Page>
