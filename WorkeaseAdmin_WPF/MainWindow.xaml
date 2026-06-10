@@ -38,7 +38,13 @@
                     <Button Content="Reports" Style="{StaticResource SidebarButtonStyle}" Tag="Reports" Click="Menu_Click"/>
                 </StackPanel>
 
-                <Button Grid.Row="2" Background="#E91E63" Margin="10" BorderThickness="0" Height="45" Cursor="Hand">
+                <Button Grid.Row="2" 
+                        Background="#E91E63" 
+                        Margin="10" 
+                        BorderThickness="0" 
+                        Height="45" 
+                        Cursor="Hand"
+                        Click="Logout_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Logout" Foreground="White" VerticalAlignment="Center" FontWeight="Bold"/>
                     </StackPanel>

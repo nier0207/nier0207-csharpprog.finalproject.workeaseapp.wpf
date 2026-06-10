@@ -12,8 +12,8 @@ namespace WorkeaseAdmin_WPF.Pages
 {
     public partial class DeleteHealthPage : Page
     {
-        private readonly HealthService _healthService = new HealthService();
-        private readonly CenterService _centerService = new CenterService();
+        private readonly HealthService _healthService;
+        private readonly CenterService _centerService;
         private List<HealthSummaryDto> _allLoadedRecords = new List<HealthSummaryDto>();
 
         // Track selection
@@ -23,63 +23,78 @@ namespace WorkeaseAdmin_WPF.Pages
         public DeleteHealthPage()
         {
             InitializeComponent();
+
+            // FIXED DI: Pulling service entities cleanly from Project Service Container framework context
+            _healthService = App.Services.GetRequiredService<HealthService>();
+            _centerService = App.Services.GetRequiredService<CenterService>();
+
             this.Loaded += Page_Loaded;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadCenters();
-            HealthListView.ItemsSource = null;
+
+            // ✅ AUTOrefresh view load strategy: Triggers an initial search load seamlessly when landing on workspace area
+            Search_Click(this, new RoutedEventArgs());
         }
 
         private async Task LoadCenters()
         {
-            var centers = await _centerService.GetAllCentersAsync();
-            if (centers != null) cmbCenterSearch.ItemsSource = centers;
+            try
+            {
+                var centers = await _centerService.GetAllCentersAsync();
+                if (centers != null) cmbCenterSearch.ItemsSource = centers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading dropdown choices context array: {ex.Message}");
+            }
         }
 
-        // Logic matched from your Edit Page
         private async void Search_Click(object sender, RoutedEventArgs e)
         {
             string searchText = SearchHealthBox.Text.Trim();
             int? childIdParam = null;
             int? centerIdParam = null;
 
-            if (string.IsNullOrWhiteSpace(searchText) && cmbCenterSearch.SelectedItem == null)
-            {
-                MessageBox.Show("Enter ID or select a Center.", "Input Required");
-                return;
-            }
-
-            if (cmbCenterSearch.SelectedItem is Center selectedCenter) centerIdParam = selectedCenter.CenterId;
+            if (cmbCenterSearch.SelectedItem is Center selectedCenter)
+                centerIdParam = selectedCenter.CenterId;
 
             bool isNumeric = int.TryParse(searchText, out int parsedId);
-            if (isNumeric) childIdParam = parsedId;
+            if (isNumeric)
+                childIdParam = parsedId;
 
             try
             {
                 var records = await _healthService.GetFilteredHealthRecordAsync(childIdParam, centerIdParam);
                 _allLoadedRecords = records ?? new List<HealthSummaryDto>();
-                HealthListView.ItemsSource = _allLoadedRecords;
 
-                // Local filtering for non-numeric search
+                // Local text segment evaluation filter fallback if text input isn't a numeric data key parameter
                 if (!string.IsNullOrWhiteSpace(searchText) && !isNumeric)
                 {
                     HealthListView.ItemsSource = _allLoadedRecords
-                        .Where(x => x.ChildName?.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                        .Where(x => x.ChildName != null &&
+                                    x.ChildName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
                         .ToList();
                 }
+                else
+                {
+                    HealthListView.ItemsSource = _allLoadedRecords;
+                }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Search failed inside deletion controller component framework: {ex.Message}");
+            }
         }
 
-        // Handle Row Selection
         private void HealthListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (HealthListView.SelectedItem is HealthSummaryDto selected)
             {
                 _selectedHealthRecordId = selected.HealthRecordId;
-                _selectedChildName = selected.ChildName;
+                _selectedChildName = selected.ChildName ?? string.Empty;
             }
         }
 
@@ -91,16 +106,23 @@ namespace WorkeaseAdmin_WPF.Pages
                 return;
             }
 
-            if (MessageBox.Show($"Delete record for {_selectedChildName}?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            var dialogMessage = $"Are you sure you want to permanently delete the health metrics record for {_selectedChildName}?";
+            if (MessageBox.Show(dialogMessage, "Confirm Permanent Deletion", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 var success = await _healthService.DeleteHealthRecordAsync(_selectedHealthRecordId);
                 if (success)
                 {
-                    MessageBox.Show("Deleted.");
+                    MessageBox.Show("Health record successfully removed.", "Deletion Successful");
                     _selectedHealthRecordId = 0;
-                    Search_Click(null, null); // Refresh list
+                    _selectedChildName = string.Empty;
+
+                    // Re-trigger global automatic search query loop refresh
+                    Search_Click(this, new RoutedEventArgs());
                 }
-                else MessageBox.Show("Delete failed.");
+                else
+                {
+                    MessageBox.Show("Delete operation failed. Please check backend network records.", "API Error Error");
+                }
             }
         }
 

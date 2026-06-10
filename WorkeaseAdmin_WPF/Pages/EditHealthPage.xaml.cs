@@ -13,7 +13,6 @@ namespace WorkeaseAdmin_WPF.Pages
 {
     public partial class EditHealthPage : Page
     {
-        // Use App.Services to stay consistent with your AddHealthPage logic
         private readonly HealthService _healthService;
         private readonly CenterService _centerService;
 
@@ -24,7 +23,6 @@ namespace WorkeaseAdmin_WPF.Pages
         {
             InitializeComponent();
 
-            // Getting services from DI container
             _healthService = App.Services.GetRequiredService<HealthService>();
             _centerService = App.Services.GetRequiredService<CenterService>();
 
@@ -33,8 +31,11 @@ namespace WorkeaseAdmin_WPF.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Load dropdown options
             await LoadCenters();
-            HealthListView.ItemsSource = null;
+
+            // ✅ AUTOrefresh view load strategy: Triggers an initial search instantly when opening page workspace layout frame
+            Search_Click(this, new RoutedEventArgs());
         }
 
         private async Task LoadCenters()
@@ -46,7 +47,7 @@ namespace WorkeaseAdmin_WPF.Pages
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading centers: {ex.Message}");
+                Console.WriteLine($"Error loading centers inside page state scope initialization: {ex.Message}");
             }
         }
 
@@ -64,15 +65,16 @@ namespace WorkeaseAdmin_WPF.Pages
 
             try
             {
+                // Fetch dynamic elements out of web API service connection pool
                 var records = await _healthService.GetFilteredHealthRecordAsync(childIdParam, centerIdParam);
                 _allLoadedRecords = records ?? new List<HealthSummaryDto>();
 
-                // Local filtering for names if search is not numeric
+                // Local filtering for child name segments if search string isn't numeric structural parameter type
                 if (!string.IsNullOrWhiteSpace(searchText) && !childIdParam.HasValue)
                 {
                     HealthListView.ItemsSource = _allLoadedRecords
                         .Where(x => x.ChildName != null &&
-                                x.ChildName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                                    x.ChildName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
                         .ToList();
                 }
                 else
@@ -86,7 +88,6 @@ namespace WorkeaseAdmin_WPF.Pages
             }
         }
 
-        // This method triggers when a row is clicked
         private void HealthListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (HealthListView.SelectedItem is HealthSummaryDto selected)
@@ -96,7 +97,7 @@ namespace WorkeaseAdmin_WPF.Pages
                 txtChildName.Text = selected.ChildName;
                 dtHealthDate.SelectedDate = selected.HealthRecordCreatedAt;
 
-                // Using InvariantCulture to avoid comma/dot issues
+                // Using InvariantCulture to keep numeric decimals formatting smooth and robust
                 txtWeight.Text = selected.HealthWeightKg.ToString("F2", CultureInfo.InvariantCulture);
                 txtHeight.Text = selected.HealthHeightCm.ToString("F1", CultureInfo.InvariantCulture);
                 txtNotes.Text = selected.HealthNotes;
@@ -131,11 +132,21 @@ namespace WorkeaseAdmin_WPF.Pages
             if (isSuccess)
             {
                 MessageBox.Show("Health Record successfully updated!");
-                Search_Click(null, null); // Refresh list
+
+                // Clear selection index layout nodes safely
+                _selectedHealthRecordId = 0;
+                txtChildName.Text = string.Empty;
+                txtWeight.Text = string.Empty;
+                txtHeight.Text = string.Empty;
+                txtNotes.Text = string.Empty;
+                dtHealthDate.SelectedDate = null;
+
+                // Re-execute standard list refresh
+                Search_Click(this, new RoutedEventArgs());
             }
             else
             {
-                MessageBox.Show("Failed to update record. Please check the API.");
+                MessageBox.Show("Failed to update record. Please check the API logs.");
             }
         }
 

@@ -4,7 +4,6 @@
       Title="Edit Child">
 
     <Page.Resources>
-        <!-- Specialized Style to match the Pink Theme for Controls -->
         <Style x:Key="PinkInputStyle" TargetType="Control">
             <Setter Property="Background" Value="White"/>
             <Setter Property="Height" Value="40"/>
@@ -35,7 +34,6 @@
                         <TextBlock Text="Enter Child ID to Edit" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
                         <TextBox x:Name="SearchChildID" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
                     </StackPanel>
-
                     <Button Content="Search Child" Click="SearchChild_Click" Width="150" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
                 </StackPanel>
             </Border>
@@ -64,15 +62,18 @@
                                 </StackPanel>
                             </Grid>
 
-                            <!-- Center Selection (Full Width for emphasis) -->
                             <StackPanel Margin="0,0,0,20">
                                 <TextBlock Text="Assigned Center" FontWeight="Bold" Margin="0,0,0,5"/>
                                 <ComboBox x:Name="cmbCenter" Style="{StaticResource PinkInputStyle}"
                                           DisplayMemberPath="CenterName" SelectedValuePath="CenterId"/>
                             </StackPanel>
 
-                            <!-- Birth Date and Gender Row -->
-                            <Grid Margin="0,0,0,20">
+                            <StackPanel Margin="0,0,0,20">
+                                <TextBlock Text="Address" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBox x:Name="txtAddress" Style="{StaticResource PinkInputStyle}"/>
+                            </StackPanel>
+
+                            <Grid Margin="0,0,0,25">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="40"/>
@@ -91,8 +92,17 @@
                                 </StackPanel>
                             </Grid>
 
-                            <TextBlock Text="/* Review and update the child's information accurately." 
-                                       Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
+                            <Separator Background="#D1C4E9" Margin="0,5,0,20" Height="1"/>
+
+                            <TextBlock Text="Parent / Guardian Account Settings" FontSize="16" FontWeight="Bold" Foreground="Black" Margin="0,0,0,15"/>
+
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="Parent / Guardian" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="cmbGuardian" 
+                                          Style="{StaticResource PinkInputStyle}" 
+                                          DisplayMemberPath="FullName" 
+                                          SelectedValuePath="UserId" />
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </DockPanel>

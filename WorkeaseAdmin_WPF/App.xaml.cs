@@ -29,6 +29,8 @@ namespace WorkeaseAdmin_WPF
             services.AddSingleton<ChildService>();
             services.AddSingleton<FeeService>();
             services.AddSingleton<AutoFeeService>();
+            services.AddSingleton<AttendanceService>();
+            services.AddSingleton<ReportService>();
 
             // Registered Pages
             RegisterPages(services);
@@ -61,6 +63,7 @@ namespace WorkeaseAdmin_WPF
             services.AddTransient<AddWorkerPage>();
             services.AddTransient<AddHealthPage>();
             services.AddTransient<AddFeePage>();
+            services.AddTransient<AddAttendancePage>();
 
             // Edit Pages
             services.AddTransient<EditCenterPage>();
@@ -68,6 +71,7 @@ namespace WorkeaseAdmin_WPF
             services.AddTransient<EditWorkerPage>();
             services.AddTransient<EditHealthPage>();
             services.AddTransient<EditFeePage>();
+            services.AddTransient<EditAttendancePage>();
 
             // Delete Pages
             services.AddTransient<DeleteCenterPage>();
@@ -75,6 +79,10 @@ namespace WorkeaseAdmin_WPF
             services.AddTransient<DeleteWorkerPage>();
             services.AddTransient<DeleteHealthPage>();
             services.AddTransient<DeleteFeePage>();
+            services.AddTransient<DeleteAttendancePage>();
+
+            services.AddTransient<NarrateObservationPage>();
+
         }
     }
 }

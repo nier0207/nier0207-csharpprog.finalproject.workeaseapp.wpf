@@ -4,7 +4,6 @@
       Title="Add Child">
 
     <Page.Resources>
-        <!-- Standardized Input Style for consistency -->
         <Style x:Key="InputControlStyle" TargetType="Control">
             <Setter Property="Height" Value="40"/>
             <Setter Property="Background" Value="White"/>
@@ -21,7 +20,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar Navigation -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="Manage Children" Click="ManageChildren_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
             <Button Content="Edit Child" Click="EditChild_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
@@ -29,19 +27,16 @@
             <Button Content="Delete Child" Click="DeleteChild_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
-        <!-- Main Content Area -->
         <Grid Grid.Column="1" Margin="30">
-            <!-- Main Form Container -->
             <Border Background="#EBE3F1" CornerRadius="10" Margin="0,0,0,49">
                 <DockPanel>
-                    <!-- Header -->
                     <Border DockPanel.Dock="Top" Background="#38b6ff" Height="60" CornerRadius="10,10,0,0">
                         <TextBlock Text="ADD NEW CHILD RECORD" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="40,30">
-                            <!-- Name Row -->
+
                             <Grid Margin="0,0,0,15">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -58,7 +53,6 @@
                                 </StackPanel>
                             </Grid>
 
-                            <!-- Guardian and Center Row -->
                             <Grid Margin="0,0,0,15">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -80,7 +74,11 @@
                                 </StackPanel>
                             </Grid>
 
-                            <!-- Birthday and Gender Row -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="Address" FontWeight="Bold" Margin="0,0,0,5" FontSize="14"/>
+                                <TextBox x:Name="txtAddress" Style="{StaticResource InputControlStyle}"/>
+                            </StackPanel>
+
                             <Grid Margin="0,0,0,25">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -100,7 +98,6 @@
                                 </StackPanel>
                             </Grid>
 
-                            <!-- Note Section -->
                             <Border Background="#D1C4E9" Padding="20" CornerRadius="5">
                                 <TextBlock Text="ℹ️ Note: Fill out the child's information accurately to register them in the system. Ensure the assigned center is correct for proper record management." 
                                            Foreground="#4527A0" TextWrapping="Wrap" FontSize="13" FontWeight="SemiBold" TextAlignment="Center"/>
@@ -110,7 +107,6 @@
                 </DockPanel>
             </Border>
 
-            <!-- Bottom Create Button -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,-15">
                 <Button Content="Create Child Record" Click="btnCreateChild_Click" Width="200" Height="45"
                         Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">

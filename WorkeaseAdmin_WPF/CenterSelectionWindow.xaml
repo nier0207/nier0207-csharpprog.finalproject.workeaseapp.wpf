@@ -1,0 +1,26 @@
+﻿<Window x:Class="WorkeaseAdmin_WPF.Windows.CenterSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Select Center" Height="250" Width="400" 
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#F5F0FF">
+
+    <Border Padding="20">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="SELECT CENTER" FontSize="18" FontWeight="Bold" 
+                       Foreground="#4527A0" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Choose a Child Development Center:" Margin="0,0,0,5"/>
+            <ComboBox x:Name="cmbCenters" Height="40" VerticalContentAlignment="Center"
+                      DisplayMemberPath="CenterName" SelectedValuePath="CenterId"/>
+
+            <UniformGrid Columns="2" Margin="0,25,0,0">
+                <Button Content="Cancel" Click="Cancel_Click" Margin="5" Height="35"
+                        Background="#E0E0E0" BorderThickness="0" Cursor="Hand"/>
+                <Button Content="Confirm" Click="Confirm_Click" Margin="5" Height="35"
+                        Background="#38b6ff" Foreground="White" BorderThickness="0" 
+                        FontWeight="Bold" Cursor="Hand"/>
+            </UniformGrid>
+        </StackPanel>
+    </Border>
+</Window>

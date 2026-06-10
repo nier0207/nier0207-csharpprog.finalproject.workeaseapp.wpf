@@ -84,9 +84,6 @@
                                 <ListBox x:Name="listChildren" BorderThickness="0" Background="Transparent" Foreground="Gray" Focusable="False" SelectionMode="Single"/>
                             </Border>
                         </StackPanel>
-
-                        <TextBlock Text="/* Only Name and Location can be updated. CDW and Children records are managed separately." 
-                           Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
                     </StackPanel>
                 </DockPanel>
             </Border>

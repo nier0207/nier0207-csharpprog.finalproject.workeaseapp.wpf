@@ -10,7 +10,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar Navigation -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="Manage Children" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0"/>
             <Button Content="Edit Child" Click="EditChild_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
@@ -18,16 +17,13 @@
             <Button Content="Delete Child" Click="DeleteChild_Click" Background="#e12749" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
         </StackPanel>
 
-        <!-- Main Content Area -->
         <Grid Grid.Column="1" Margin="20">
             <Border Background="#F3E5F5" BorderBrush="{StaticResource PrimaryPink}" BorderThickness="1" CornerRadius="10">
                 <DockPanel>
-                    <!-- Header -->
                     <Border DockPanel.Dock="Top" Background="{StaticResource PrimaryPink}" Height="60" CornerRadius="9,9,0,0">
                         <TextBlock Text="MANAGE CHILDREN" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <!-- ListView -->
                     <ListView x:Name="ChildrenListView" 
                               Background="Transparent" 
                               BorderThickness="0" 
@@ -35,38 +31,37 @@
                               SelectionMode="Single">
                         <ListView.View>
                             <GridView>
-                                <!-- Basic Information -->
                                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ChildId}" Width="40"/>
 
                                 <GridViewColumn Header="Full Name" 
                                                 DisplayMemberBinding="{Binding ChildFullName, TargetNullValue='N/A'}" 
-                                                Width="160"/>
+                                                Width="150"/>
+
+                                <GridViewColumn Header="Address" 
+                                                DisplayMemberBinding="{Binding ChildAddress, TargetNullValue='N/A'}" 
+                                                Width="180"/>
 
                                 <GridViewColumn Header="Gender" 
                                                 DisplayMemberBinding="{Binding ChildGender, TargetNullValue='N/A'}" 
-                                                Width="70"/>
+                                                Width="60"/>
 
                                 <GridViewColumn Header="Birth Date" 
                                                 DisplayMemberBinding="{Binding ChildBirthDate, StringFormat=\{0:MM/dd/yyyy\}}" 
-                                                Width="90"/>
+                                                Width="85"/>
 
-                                <!-- Center Assignment -->
                                 <GridViewColumn Header="Assigned Center" 
                                                 DisplayMemberBinding="{Binding CenterName, TargetNullValue='Unassigned'}" 
-                                                Width="130"/>
-
-                                <!-- Enrollment Date -->
-                                <GridViewColumn Header="Enrolled Date" 
-                                                DisplayMemberBinding="{Binding ChildEnrolledDate, StringFormat=\{0:MM/dd/yyyy\}}" 
-                                                Width="100"/>
-
-                                <!-- NEW: Updated At Column -->
-                                <GridViewColumn Header="Last Updated" 
-                                                DisplayMemberBinding="{Binding ChildUpdatedDate, StringFormat=\{0:MM/dd/yyyy HH:mm\}, TargetNullValue='Never'}" 
                                                 Width="120"/>
 
-                                <!-- Status Column -->
-                                <GridViewColumn Header="Status" Width="80">
+                                <GridViewColumn Header="Enrolled Date" 
+                                                DisplayMemberBinding="{Binding ChildEnrolledDate, StringFormat=\{0:MM/dd/yyyy\}}" 
+                                                Width="90"/>
+
+                                <GridViewColumn Header="Last Updated" 
+                                                DisplayMemberBinding="{Binding ChildUpdatedDate, StringFormat=\{0:MM/dd/yyyy HH:mm\}, TargetNullValue='Never'}" 
+                                                Width="115"/>
+
+                                <GridViewColumn Header="Status" Width="70">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock x:Name="txtStatus" 

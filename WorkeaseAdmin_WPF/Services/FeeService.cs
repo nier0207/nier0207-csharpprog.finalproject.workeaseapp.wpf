@@ -79,6 +79,44 @@ namespace WorkeaseAdmin_WPF.Services
             return null;
         }
 
+        // Services/FeeService.cs
+
+        public async Task<FeesSummaryDto?> GetOverallFeesSummaryAsync(int? centerId, int? month, int? year)
+        {
+            AttachToken();
+            try
+            {
+                // Dynamically build the query string based on provided parameters
+                var queryParams = new List<string>();
+                if (centerId.HasValue) queryParams.Add($"centerId={centerId.Value}");
+                if (month.HasValue) queryParams.Add($"month={month.Value}");
+                if (year.HasValue) queryParams.Add($"year={year.Value}");
+
+                string queryString = queryParams.Count > 0
+                    ? "?" + string.Join("&", queryParams)
+                    : string.Empty;
+
+                // GET /api/fees/summary with its optional query filters
+                var response = await _http.GetAsync($"/api/Fees/summary{queryString}");
+
+                if (!response.IsSuccessStatusCode) return null;
+
+                var content = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                return JsonSerializer.Deserialize<FeesSummaryDto>(content, options);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[FeeService] GetOverallFeesSummary error: {ex.Message}");
+                return null;
+            }
+        }
+
         public async Task<FeeSummaryDto?> UpdateFeeRecordAsync(int feeId, UpdateFeeDto updatedFeeRecord)
         {
             AttachToken();
@@ -117,12 +155,12 @@ namespace WorkeaseAdmin_WPF.Services
             var response = await _http.DeleteAsync($"/api/Fees/{feeId}");
             if (response.IsSuccessStatusCode)
             {
+                // Converter removed per earlier instruction layout preferences.
                 return true;
             }
             var errorBody = await response.Content.ReadAsStringAsync();
             System.Diagnostics.Debug.WriteLine($"API Error: {errorBody}");
             return false;
-
         }
     }
 }

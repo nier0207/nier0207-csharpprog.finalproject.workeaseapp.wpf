@@ -29,7 +29,9 @@ namespace WorkeaseAdmin_WPF.Pages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadCenters();
-            FeesListView.ItemsSource = null;
+
+            // ✅ AUTO-REFRESH VISIBILITY FLOW: Pulls all fee records automatically upon opening this layout page frame
+            Search_Click(this, new RoutedEventArgs());
         }
 
         private async Task LoadCenters()
@@ -41,7 +43,7 @@ namespace WorkeaseAdmin_WPF.Pages
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Dropdown choices collection allocation failure: {ex.Message}");
             }
         }
 
@@ -128,7 +130,7 @@ namespace WorkeaseAdmin_WPF.Pages
                 FeeRecordMonth = monthInt,
                 FeeRecordYear = yearInt,
                 FeeRecordAmount = amount,
-                FeeRecordIsPaid = true // Assuming update usually marks as paid
+                FeeRecordIsPaid = true
             };
 
             var result = await _feeService.UpdateFeeRecordAsync(_selectedFeeId, updateData);
@@ -139,7 +141,8 @@ namespace WorkeaseAdmin_WPF.Pages
 
                 ClearFields();
 
-                Search_Click(null, null);
+                // Refresh datagrid row index states cleanly
+                Search_Click(this, new RoutedEventArgs());
             }
             else
             {
@@ -147,7 +150,6 @@ namespace WorkeaseAdmin_WPF.Pages
             }
         }
 
-        // Logic to clear all input fields
         private void ClearFields()
         {
             _selectedFeeId = 0;

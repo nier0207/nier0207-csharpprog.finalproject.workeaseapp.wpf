@@ -148,13 +148,42 @@ namespace WorkeaseAdmin_WPF.Pages
 
         private async void GenerateMonthlyFee_Click(object sender, RoutedEventArgs e)
         {
+            // ── SAFETY GUARD: Check if previous month has actually completed ──
+            if (_currentRecords != null && _currentRecords.Any())
+            {
+                // Find the newest fee record based on its DueDate / generation properties
+                var latestRecord = _currentRecords.OrderByDescending(r => r.FeeDueDate).FirstOrDefault();
+
+                if (latestRecord != null)
+                {
+                    DateTime now = DateTime.Now;
+
+                    // Option A: Check if the latest record matches our current calendar Month/Year context
+                    if (latestRecord.FeeDueDate.Month == now.Month && latestRecord.FeeDueDate.Year == now.Year)
+                    {
+                        MessageBox.Show("Fees have already been generated for the current active month.",
+                                        "Action Denied", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Option B: Ensure the target billing tracking month has finished completely 
+                    // before a new cycle sequence generates
+                    DateTime nextAllowedGenerationDate = new DateTime(latestRecord.FeeDueDate.Year, latestRecord.FeeDueDate.Month, 1).AddMonths(1);
+                    if (now < nextAllowedGenerationDate)
+                    {
+                        MessageBox.Show($"Cannot generate new records yet. The billing cycle for the last generated records ({latestRecord.FeeDueDate:MMMM yyyy}) hasn't concluded.",
+                                        "Billing Cycle Active", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+            }
+
             var confirm = MessageBox.Show("Generate monthly fees for all active children?", "System Action", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirm == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Call the new service method
                     bool success = await _autoFeeService.GenerateMonthlyFeesAsync();
 
                     if (success)
@@ -183,13 +212,12 @@ namespace WorkeaseAdmin_WPF.Pages
             {
                 try
                 {
-                    // Call the new service method
                     bool success = await _autoFeeService.ProcessOverdueFeesAsync();
 
                     if (success)
                     {
                         MessageBox.Show("Overdue statuses updated successfully!", "Success");
-                        await RefreshList(); // Refresh to see status changes (Red to Orange)
+                        await RefreshList(); // Refresh to see status changes
                     }
                     else
                     {

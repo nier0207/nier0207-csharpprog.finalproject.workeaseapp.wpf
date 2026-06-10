@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions; // Required for Regex parsing
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using WorkeaseAdmin_WPF.Models;
 using WorkeaseAdmin_WPF.Services;
 
@@ -32,15 +34,73 @@ namespace WorkeaseAdmin_WPF.Pages
             }
         }
 
+        private string GetPasswordText()
+        {
+            return txtPassword.Visibility == Visibility.Visible ? txtPassword.Password : txtPasswordUnmasked.Text;
+        }
+
+        private void btnTogglePassword_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtPassword.Visibility == Visibility.Visible)
+            {
+                txtPasswordUnmasked.Text = txtPassword.Password;
+                txtPassword.Visibility = Visibility.Collapsed;
+                txtPasswordUnmasked.Visibility = Visibility.Visible;
+
+                imgEye.Source = new BitmapImage(new Uri("pack://application:,,,/Images/eye_hidden.png"));
+                txtPasswordUnmasked.Focus();
+            }
+            else
+            {
+                txtPassword.Password = txtPasswordUnmasked.Text;
+                txtPasswordUnmasked.Visibility = Visibility.Collapsed;
+                txtPassword.Visibility = Visibility.Visible;
+
+                imgEye.Source = new BitmapImage(new Uri("pack://application:,,,/Images/eye_visible.png"));
+                txtPassword.Focus();
+            }
+        }
+
         private async void btnCreateWorker_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Basic Validation
+            string emailText = txtEmail.Text.Trim();
+            string passwordText = GetPasswordText();
+
+            // 1. Basic Required Fields Validation
             if (string.IsNullOrWhiteSpace(txtFirstName.Text) ||
                 string.IsNullOrWhiteSpace(txtLastName.Text) ||
-                string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtPassword.Password))
+                string.IsNullOrWhiteSpace(emailText) ||
+                string.IsNullOrWhiteSpace(passwordText))
             {
                 MessageBox.Show("Please fill out all required fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 2. Exact Email Suffix Validation (@workease.burgos.ph)
+            // Ensures the string ends directly with the domain format
+            if (!emailText.EndsWith("@workease.burgos.ph", StringComparison.OrdinalIgnoreCase) || emailText.Length <= 19)
+            {
+                MessageBox.Show("Email address must use the official corporate domain pattern:\n'example@workease.burgos.ph'",
+                                "Invalid Email Pattern", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 3. Strict Password Complexity Validation
+            // ^(?=.*[a-z]) : At least one lowercase letter
+            // anisotropy (?=.*[A-Z]) : At least one uppercase letter
+            // (?=.*\d) : At least one digit
+            // (?=.*[^\da-zA-Z]) : At least one special character
+            // .{8,} : Minimum 8 characters in total length
+            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$";
+            if (!Regex.IsMatch(passwordText, passwordPattern))
+            {
+                MessageBox.Show("Password does not meet the complexity requirements:\n\n" +
+                                "• Must be at least 8 characters long\n" +
+                                "• Must contain at least 1 uppercase letter\n" +
+                                "• Must contain at least 1 lowercase letter\n" +
+                                "• Must contain at least 1 numeric digit\n" +
+                                "• Must contain at least 1 special character (e.g., !, @, #, $, %)",
+                                "Weak Password", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -52,7 +112,7 @@ namespace WorkeaseAdmin_WPF.Pages
                 return;
             }
 
-            // 2. CenterId Logic: Nullable for Parent/Admin, Required for CDW
+            // 4. CenterId Logic: Nullable for Parent/Admin, Required for CDW
             int? selectedCenterId = cmbCenter.SelectedValue as int?;
 
             if (selectedRole == "CDW" && selectedCenterId == null)
@@ -61,17 +121,17 @@ namespace WorkeaseAdmin_WPF.Pages
                 return;
             }
 
-            // 3. Prepare the DTO
+            // 5. Prepare the DTO
             var newUserDto = new CreateUserDto
             {
                 UserName = $"{txtFirstName.Text.Trim()} {txtLastName.Text.Trim()}",
-                UserEmail = txtEmail.Text.Trim(),
-                UserHashPassword = txtPassword.Password,
+                UserEmail = emailText,
+                UserHashPassword = passwordText,
                 UserType = selectedRole,
-                CenterId = selectedCenterId // This will be null if nothing is selected
+                CenterId = selectedCenterId
             };
 
-            // 4. Call the Service
+            // 6. Call the Service
             try
             {
                 var createdUser = await _userService.CreateUserAsync(newUserDto);
@@ -100,11 +160,17 @@ namespace WorkeaseAdmin_WPF.Pages
             txtLastName.Clear();
             txtEmail.Clear();
             txtPassword.Clear();
+            txtPasswordUnmasked.Clear();
+
+            txtPasswordUnmasked.Visibility = Visibility.Collapsed;
+            txtPassword.Visibility = Visibility.Visible;
+            imgEye.Source = new BitmapImage(new Uri("pack://application:,,,/Images/eye_visible.png"));
+
             cmbRole.SelectedIndex = -1;
             cmbCenter.SelectedIndex = -1;
         }
 
-        // Sidebar Navigation using Dependency Injection
+        // Sidebar Navigation
         private void ManageWorkers_Click(object sender, RoutedEventArgs e)
         {
             var page = App.Services.GetRequiredService<WorkersPage>();

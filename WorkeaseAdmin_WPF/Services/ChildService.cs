@@ -42,6 +42,48 @@ namespace WorkeaseAdmin_WPF.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> LinkParentAsync(int childId, int parentId)
+        {
+            AttachToken();
+            try
+            {
+                var response = await _http.PutAsync(
+                    $"/api/children/{childId}/link-parent/{parentId}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[WPF] LinkParent error: {error}");
+                }
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[WPF] LinkParent exception: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UnlinkParentAsync(int childId)
+        {
+            AttachToken();
+            try
+            {
+                var response = await _http.PutAsync(
+                    $"/api/children/{childId}/unlink-parent", null);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[WPF] UnlinkParent exception: {ex.Message}");
+                return false;
+            }
+        }
+
         public async Task<bool> DeleteChildAsync(int childId)
         {
             AttachToken();

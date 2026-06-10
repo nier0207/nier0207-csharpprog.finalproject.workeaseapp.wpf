@@ -100,9 +100,6 @@
                                               SelectedValuePath="CenterId"/>
                                 </StackPanel>
                             </Grid>
-
-                            <TextBlock Text="/* Review all fields including Role and Center assignment before saving." 
-                                       Foreground="#85E15F" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="13"/>
                         </StackPanel>
                     </ScrollViewer>
                 </DockPanel>

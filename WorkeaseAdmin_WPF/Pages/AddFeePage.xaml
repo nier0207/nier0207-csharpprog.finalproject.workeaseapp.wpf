@@ -3,13 +3,26 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Add Payment Record">
 
+    <Page.Resources>
+        <!-- Standardized Input Style based on Health Page -->
+        <Style x:Key="InputControlStyle" TargetType="Control">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DDD"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Background="#F5F0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar Navigation (Consistent Sub-nav) -->
+        <!-- Sidebar Navigation (Consistent with Health Page) -->
         <StackPanel Grid.Column="0" Background="{StaticResource DeepPurple}">
             <Button Content="View Fees" Click="BackToFees_Click" Background="{StaticResource DeepPurple}" Foreground="White" Height="50" BorderThickness="0" Cursor="Hand"/>
             <Button Content="Edit Payment" Click="EditFee_Click" Background="#7E57C2" Foreground="White" Height="50" BorderThickness="0" Margin="0,2,0,0" Cursor="Hand"/>
@@ -20,76 +33,99 @@
         <!-- Main Content -->
         <Grid Grid.Column="1" Margin="30">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Add Form Panel (Blue Theme) -->
-            <Border Grid.Row="0" Background="White" CornerRadius="10" VerticalAlignment="Top" BorderBrush="#38b6ff" BorderThickness="1.5">
+            <!-- 1. Search Bar Section (Primary Blue) -->
+            <Border Grid.Row="0" Background="White" CornerRadius="10" Padding="20" VerticalAlignment="Top" Height="100" BorderBrush="#38b6ff" BorderThickness="2" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Bottom">
+                        <TextBlock Text="Enter Child ID to Record Fee" Foreground="Gray" FontSize="12" Margin="0,0,0,5"/>
+                        <TextBox x:Name="SearchChildID" Width="200" Height="35" VerticalContentAlignment="Center" Padding="10,0" BorderBrush="#DDD"/>
+                    </StackPanel>
+
+                    <Button Content="Search Child" Click="SearchChild_Click" Width="150" Height="35" Margin="20,0,0,0" VerticalAlignment="Bottom" 
+                            Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 2. Main Form Container (DTO Mapping) -->
+            <Border Grid.Row="1" Background="#EBE3F1" CornerRadius="10" Margin="0,0,0,49">
                 <DockPanel>
                     <!-- Header -->
                     <Border DockPanel.Dock="Top" Background="#38b6ff" Height="60" CornerRadius="10,10,0,0">
-                        <TextBlock Text="ADD NEW PAYMENT RECORD" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="NEW PAYMENT RECORD REGISTRATION" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <StackPanel Margin="40,25">
-                        <!-- Child Name (TextBox) -->
-                        <TextBlock Text="Child Full Name" FontWeight="Bold" Margin="0,0,0,5" Foreground="#38b6ff"/>
-                        <TextBox x:Name="txtChildName" Height="35" BorderThickness="1" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0" Margin="0,0,0,15">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="5"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="40,30">
 
-                        <Grid Margin="0,10,0,15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Amount Paid -->
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Amount (PHP)" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <TextBox x:Name="AmountBox" Height="35" BorderThickness="1" BorderBrush="#DDD" VerticalContentAlignment="Center" Padding="10,0"/>
+                            <!-- Child Name Row (Read-Only) -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="Child Full Name" FontWeight="Bold" Margin="0,0,0,5" FontSize="14"/>
+                                <TextBox x:Name="txtChildName" Style="{StaticResource InputControlStyle}" 
+                                         IsReadOnly="True" Background="#F0F0F0" Foreground="#555"/>
                             </StackPanel>
 
-                            <!-- Date of Payment -->
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Date of Payment" FontWeight="Bold" Margin="0,0,0,5" Foreground="#444"/>
-                                <DatePicker x:Name="PaymentDatePicker" Height="35" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#DDD"/>
+                            <!-- Fee Amount Row (DTO: FeeRecordAmount) -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="Amount (PHP)" FontWeight="Bold" Margin="0,0,0,5" FontSize="14"/>
+                                <TextBox x:Name="txtAmount" Style="{StaticResource InputControlStyle}"/>
                             </StackPanel>
-                        </Grid>
 
-                        <!-- Fee Type -->
-                        <TextBlock Text="Fee Category" FontWeight="Bold" Margin="0,10,0,5" Foreground="#444"/>
-                        <ComboBox x:Name="FeeTypeCombo" Height="35" VerticalContentAlignment="Center" BorderThickness="1" BorderBrush="#DDD">
-                            <ComboBoxItem Content="Tuition Fee" IsSelected="True"/>
-                            <ComboBoxItem Content="Miscellaneous Fee"/>
-                            <ComboBoxItem Content="Feeding Program"/>
-                            <ComboBoxItem Content="Uniform/Books"/>
-                            <ComboBoxItem Content="Other"/>
-                        </ComboBox>
+                            <!-- Month and Year Row (DTO: FeeRecordMonth & FeeRecordYear) -->
+                            <Grid Margin="0,0,0,25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <!-- Remarks/Receipt No. -->
-                        <TextBlock Text="Receipt No. / Remarks" FontWeight="Bold" Margin="0,20,0,5" Foreground="#444"/>
-                        <TextBox x:Name="RemarksBox" Height="60" BorderThickness="1" BorderBrush="#DDD" TextWrapping="Wrap" AcceptsReturn="True" Padding="10"/>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Payment Month" FontWeight="Bold" Margin="0,0,0,5" FontSize="14"/>
+                                    <ComboBox x:Name="cmbMonth" Style="{StaticResource InputControlStyle}">
+                                        <ComboBoxItem Content="January" Tag="1"/>
+                                        <ComboBoxItem Content="February" Tag="2"/>
+                                        <ComboBoxItem Content="March" Tag="3"/>
+                                        <ComboBoxItem Content="April" Tag="4"/>
+                                        <ComboBoxItem Content="May" Tag="5"/>
+                                        <ComboBoxItem Content="June" Tag="6"/>
+                                        <ComboBoxItem Content="July" Tag="7"/>
+                                        <ComboBoxItem Content="August" Tag="8"/>
+                                        <ComboBoxItem Content="September" Tag="9"/>
+                                        <ComboBoxItem Content="October" Tag="10"/>
+                                        <ComboBoxItem Content="November" Tag="11"/>
+                                        <ComboBoxItem Content="December" Tag="12"/>
+                                    </ComboBox>
+                                </StackPanel>
 
-                        <TextBlock Text="/* Verify payment amount before creating record */" 
-                                   Foreground="#38b6ff" FontSize="12" Margin="0,20,0,0" HorizontalAlignment="Center" FontStyle="Italic"/>
-                    </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Payment Year" FontWeight="Bold" Margin="0,0,0,5" FontSize="14"/>
+                                    <ComboBox x:Name="cmbYear" Style="{StaticResource InputControlStyle}">
+                                        <ComboBoxItem Content="2026" IsSelected="True"/>
+                                        <ComboBoxItem Content="2027"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Instructions Note -->
+                            <Border Background="#D1C4E9" Padding="20" CornerRadius="5">
+                                <TextBlock Text="ℹ️ Note: Verify the amount and period before clicking create. The system will generate a receipt number automatically based on these details." 
+                                           Foreground="#4527A0" TextWrapping="Wrap" FontSize="13" FontWeight="SemiBold" TextAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
                 </DockPanel>
             </Border>
 
-            <!-- Action Buttons -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-               
-                <Button Content="CREATE PAYMENT" Click="CreatePayment_Click" Width="200" Height="40" Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
+            <!-- Bottom Create Button -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,-15">
+                <Button Content="Create Payment Record" Click="CreatePayment_Click" Width="200" Height="45"
+                        Background="#38b6ff" Foreground="White" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="1"/>
+                            <Setter Property="CornerRadius" Value="3"/>
                         </Style>
                     </Button.Resources>
                 </Button>

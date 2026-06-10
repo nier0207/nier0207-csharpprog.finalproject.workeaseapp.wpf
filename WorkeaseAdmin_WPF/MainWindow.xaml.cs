@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using WorkeaseAdmin_WPF.Pages;
@@ -24,10 +25,12 @@ namespace WorkeaseAdmin_WPF
                 return;
             }
 
+            // Bind profiles meta elements securely onto the layout containers
             txtUserName.Text = profile.UserName ?? "User";
             txtUserEmail.Text = profile.UserEmail ?? "No Email";
-            txtUserType.Text = profile.UserType ?? "Staff";
+            txtUserType.Text = profile.UserType?.ToUpper() ?? "STAFF";
 
+            // Load initial dashboard default presentation window
             MainFrame.Navigate(App.Services.GetRequiredService<DashboardPage>());
         }
 
@@ -64,6 +67,37 @@ namespace WorkeaseAdmin_WPF
                     case "Reports":
                         MainFrame.Navigate(App.Services.GetRequiredService<ReportsPage>());
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// HANDLER EVENT: Clears user session context state and resets presentation layer window back to LoginPage.
+        /// </summary>
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                "Are you sure you want to log out from Workease Admin?",
+                "Confirm Logout",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    // Clean memory footprint profile references 
+                    _session.ClearSession();
+
+                    // Swap out standard layout windows presentation threads safely
+                    var loginWindow = App.Services.GetRequiredService<LoginWindow>();
+                    loginWindow.Show();
+
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred during logout: {ex.Message}", "Logout Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

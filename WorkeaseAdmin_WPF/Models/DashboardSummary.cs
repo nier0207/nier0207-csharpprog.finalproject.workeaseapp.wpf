@@ -12,5 +12,6 @@ namespace WorkeaseAdmin_WPF.Models
         public int TotalCenters { get; set; }
         public int TotalChildren { get; set; }
         public int TotalAbnormalChildren { get; set; }
+        public decimal TotalAccumulatedFees { get; set; } // ✅ added
     }
 }

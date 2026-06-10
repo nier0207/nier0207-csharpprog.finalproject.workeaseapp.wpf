@@ -24,18 +24,18 @@ namespace WorkeaseAdmin_WPF.Pages
         {
             try
             {
-                // 1. Load Centers
+                // 1. Fetch available Daycare Centers
                 var centers = await _centerService.GetAllCentersAsync();
                 cmbCenter.ItemsSource = centers;
 
-                // 2. Load Guardians (Filtered to Parents only)
+                // 2. Fetch Users filtered specifically to Parent entities
                 var allUsers = await _userService.GetAllUsersAsync();
                 var parentsOnly = allUsers
                     .Where(u => u.UserType != null && u.UserType.Equals("Parent", StringComparison.OrdinalIgnoreCase))
                     .Select(u => new
                     {
                         u.UserId,
-                        FullName = u.UserName // Assuming UserName contains the full name string
+                        FullName = u.UserName
                     })
                     .ToList();
 
@@ -43,53 +43,58 @@ namespace WorkeaseAdmin_WPF.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading form data: {ex.Message}", "API Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Error synchronizing dropdown fields: {ex.Message}", "Form Load Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private async void btnCreateChild_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Validation
+            // 1. Complete Form Validation Check
             if (string.IsNullOrWhiteSpace(txtFirstName.Text) ||
                 string.IsNullOrWhiteSpace(txtLastName.Text) ||
+                string.IsNullOrWhiteSpace(txtAddress.Text) ||
                 cmbGuardian.SelectedValue == null ||
                 dpBirthDate.SelectedDate == null ||
                 cmbGender.SelectedItem == null ||
                 cmbCenter.SelectedValue == null)
             {
-                MessageBox.Show("Please fill out all required fields, including Guardian and Center.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill out all required fields, including Address, Guardian, and Center.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // 2. Prepare the DTO
-            var newChildDto = new CreateChildDto // Ensure this model exists in your Models folder
+            // 2. Map values into the Data Transfer Object
+            var newChildDto = new CreateChildDto
             {
                 ChildFirstName = txtFirstName.Text.Trim(),
                 ChildLastName = txtLastName.Text.Trim(),
+                ChildAddress = txtAddress.Text.Trim(),
                 ChildBirthDate = dpBirthDate.SelectedDate.Value,
-                ChildGender = (cmbGender.SelectedItem as ComboBoxItem)?.Content.ToString(),
+                ChildGender = (cmbGender.SelectedItem as ComboBoxItem)?.Content.ToString() ?? string.Empty,
                 UserId = (int)cmbGuardian.SelectedValue,
                 CenterId = (int)cmbCenter.SelectedValue
             };
 
-            // 3. Call Service
+            // 3. Dispatch data down to service layer
             try
             {
                 var result = await _childService.CreateChildWithParentAsync(newChildDto);
 
                 if (result != null)
                 {
-                    MessageBox.Show($"Child record for '{result.ChildFirstName}' created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    // Safe execution fallback so missing properties on the returned dynamic type won't trigger compilation errors
+                    string targetName = $"{newChildDto.ChildFirstName} {newChildDto.ChildLastName}";
+
+                    MessageBox.Show($"Child record for '{targetName}' created successfully!", "Registration Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                     ClearForm();
                 }
                 else
                 {
-                    MessageBox.Show("Failed to save the record. Please check the server connection.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The backend was reached but rejected the record modification.", "Storage Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"An exception was unhandled by the service connector: {ex.Message}", "Connection Failures", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -97,13 +102,14 @@ namespace WorkeaseAdmin_WPF.Pages
         {
             txtFirstName.Clear();
             txtLastName.Clear();
+            txtAddress.Clear();
             cmbGuardian.SelectedIndex = -1;
             cmbCenter.SelectedIndex = -1;
             cmbGender.SelectedIndex = -1;
             dpBirthDate.SelectedDate = null;
         }
 
-        // --- Sidebar Navigation ---
+        // --- View Routing Controls ---
 
         private void ManageChildren_Click(object sender, RoutedEventArgs e)
         {

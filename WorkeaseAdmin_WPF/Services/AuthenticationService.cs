@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
+﻿using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WorkeaseAdmin_WPF.Models;
-using static System.Net.WebRequestMethods;
 
 namespace WorkeaseAdmin_WPF.Services
 {
